@@ -3,9 +3,86 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Groen & Gewoon doen</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cascadia+Mono:ital,wght@0,200..700;1,200..700&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
 </head>
 <body>
-    
+    <h1 id="title">Beheerszijde (Admin)</h1>
+    <div class="main">
+    <div class="admin-header"> <h2> Admin — Groen & Gewoon doen</h2> <button class="logout-button">Logout</button> </div>
+
+    <div class="tab">
+        <button class="tablinks" onclick="Tabs(event, 'orders')" id="defaultOpen">Orders</button>
+        <button class="tablinks" onclick="Tabs(event, 'pakketten')">Pakketten</button>
+        <button class="tablinks" onclick="Tabs(event, 'tarieven')">Tarieven</button>
+    </div>
+
+    <div id="orders" class="tabcontent">
+        <h3>Orders overzicht</h3>
+        <table class="orders-table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Klant</th>
+                    <th>Details</th>
+                    <th>Offerte</th>
+                    <th>Status</th>
+                    <th>Actos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>#001</td>
+                    <td>Jan Jansen</td>
+                    <td>02-09-2008</td>
+                    <td>Basic</td>
+                    <td>In behandeling</td>
+                    <td>Bekijken</td>
+                </tr>
+                <tr>
+                    <td>#002</td>
+                    <td>Piet Pietersen</td>
+                    <td>02-10-2008</td>
+                    <td>Premium</td>
+                    <td>Verzonden</td>
+                    <td>Bekijken</td>
+                </tr>
+                <tr>
+                    <td>#003</td>
+                    <td>Klaas Klaassen</td>
+                    <td>02-11-2008</td>
+                    <td>Medium</td>
+                    <td>Geleverd</td>
+                    <td>Bekijken</td>
+                </tr>
+                <tr>
+                    <td>#004</td>
+                    <td>Osama bin Laden</td>
+                    <td>09-11-2001</td>
+                    <td>Medium</td>
+                    <td>Geleverd</td>
+                    <td>Bekijken</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="pakketten" class="tabcontent">
+        <h3>Pakketten</h3>
+        <p>Beheer de pakketten.</p>
+    </div>
+
+    <div id="tarieven" class="tabcontent">
+        <h3>Tarieven</h3>
+        <p>Beheer de tarieven.</p>
+    </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+    <script>
+        document.getElementById("defaultOpen").click();
+    </script>
 </body>
 </html>
