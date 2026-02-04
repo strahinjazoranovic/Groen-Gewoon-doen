@@ -1,11 +1,89 @@
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Groen & Gewoon doen</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    
-</body>
+    <link rel="stylesheet" href="klant.css" />
+  </head>
+  <body>
+    <div id="header">
+      <h1 id="title">Groen & Gewoon doen</h1>
+    </div>
+    <div id="welkom">
+      <h1 class="header-text">Welkom!</h1>
+      <h1 class="text">Bestel uw tuinservice eenvoudig online!</h1>
+    </div>
+    <div id="card">
+      <div id="card-title">
+        <h1>Standard Pakketten</h1>
+      </div>
+      <div id="card-content">
+        <select name="pakketen" id="pakketen">
+          <option value="standard">Standard</option>
+          <option value="premium">Premium</option>
+        </select>
+        <button id="button">Bestel</button>
+      </div>
+    </div>
+
+    <div id="card">
+      <div id="card-title">
+        <h1>Custom Offerte</h1>
+      </div>
+      <div id="card-content">
+        <div>
+          <h3>m2 gras</h3>
+          <input type="number" id="gras" name="gras" />
+        </div>
+        <div>
+          <h3>m2 tegels</h3>
+          <input type="number" id="tegels" name="tegels" />
+        </div>
+        <div>
+          <h3>m2 hegging</h3>
+          <input type="number" id="hegging" name="hegging" />
+        </div>
+        <div id="button-container">
+          <input type="checkbox" id="option" name="option" value="option" />
+          <label for="option">Opties</label><br />
+          <button id="button">Bereken Offerte</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="card">
+      <div id="card-title">
+        <h1>Mijn Orders</h1>
+      </div>
+      <div id="card-content">
+        <table class="orders-table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Pakket / Info</th>
+              <th>Offerte</th>
+              <th>Status</th>
+              <th>Datum</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>#001</td>
+              <td>Osama Bin Laden</td>
+              <td>Standaard</td>
+              <td>In behandeling</td>
+              <td>11-09-2001</td>
+            </tr>
+            <tr>
+              <td>#002</td>
+              <td>Jeffrey Epstein</td>
+              <td>Premium</td>
+              <td>Verzonden</td>
+              <td>11-09-2001</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
 </html>
