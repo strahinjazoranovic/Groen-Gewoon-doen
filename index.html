@@ -1,12 +1,15 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Groen & Gewoon doen</title>
+    <link rel="icon" href="assets/logo.png" type="image/png">
     <link rel="stylesheet" href="klant.css" />
+    
   </head>
   <body>
     <div id="header">
+      <img src="assets/logo.png" alt="logo" style="width: 80px;">
       <h1 id="title">Groen & Gewoon doen</h1>
     </div>
     <div id="welkom">
@@ -68,22 +71,24 @@
           </thead>
           <tbody>
             <tr>
-              <td>#001</td>
-              <td>Osama Bin Laden</td>
-              <td>Standaard</td>
-              <td>In behandeling</td>
-              <td>11-09-2001</td>
+              <td data-label="Order ID">#001</td>
+              <td data-label="Pakket / Info">Osama Bin Laden</td>
+              <td data-label="Offerte">Standaard</td>
+              <td data-label="Status">In behandeling</td>
+              <td data-label="Datum">11-09-2001</td>
             </tr>
             <tr>
-              <td>#002</td>
-              <td>Jeffrey Epstein</td>
-              <td>Premium</td>
-              <td>Verzonden</td>
-              <td>11-09-2001</td>
+              <td data-label="Order ID">#002</td>
+              <td data-label="Pakket / Info">Jeffrey Epstein</td>
+              <td data-label="Offerte">Premium</td>
+              <td data-label="Status">Verzonden</td>
+              <td data-label="Datum">11-09-2001</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
+
+    <script src="js/main.js"></script>
   </body>
 </html>
