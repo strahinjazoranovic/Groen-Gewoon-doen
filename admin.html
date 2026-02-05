@@ -1,182 +1,227 @@
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
     <title>Groen & Gewoon doen</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cascadia+Mono:ital,wght@0,200..700;1,200..700&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="admin.css">
-</head>
-<body>
-    <h1 id="title">Beheerszijde (Admin)</h1>
+    <link rel="icon" href="assets/logo.png" type="image/png" />
+    <link rel="stylesheet" href="main.css" />
+  </head>
+  <body>
+    <h1 id="title2">Beheerszijde (Admin)</h1>
     <div class="main">
-    <div class="admin-header"> <h2> Admin — Groen & Gewoon doen</h2> <button class="btn btn-gradient" type="button">Logout</button> </div>
+      <div class="admin-header">
+        <h2>Admin — Groen & Gewoon doen</h2>
+        <button class="btn btn-gradient" type="button">Logout</button>
+      </div>
 
-    <div class="tab">
-        <button class="tablinks" onclick="Tabs(event, 'orders')" id="defaultOpen">Orders</button>
-        <button class="tablinks" onclick="Tabs(event, 'pakketten')">Pakketten</button>
-        <button class="tablinks" onclick="Tabs(event, 'tarieven')">Tarieven</button>
-    </div>
+      <div class="tab">
+        <button
+          class="tablinks"
+          onclick="Tabs(event, 'orders')"
+          id="defaultOpen"
+        >
+          Orders
+        </button>
+        <button class="tablinks" onclick="Tabs(event, 'pakketten')">
+          Pakketten
+        </button>
+        <button class="tablinks" onclick="Tabs(event, 'tarieven')">
+          Tarieven
+        </button>
+      </div>
 
-    <div id="orders" class="tabcontent">
+      <div id="orders" class="tabcontent">
         <h3>Orders overzicht</h3>
         <div class="orders-scroll">
-            <table class="orders-table">
-                <thead>
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Klant</th>
-                        <th>Details</th>
-                        <th>Offerte</th>
-                        <th>Status</th>
-                        <th>Actos</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>#001</td>
-                        <td>Jan Jansen</td>
-                        <td>02-09-2008</td>
-                        <td>Basic</td>
-                        <td>In behandeling</td>
-                        <td><button class="btn btn-green" type="button">Bekijken</button></td>
-                    </tr>
-                    <tr>
-                        <td>#002</td>
-                        <td>Piet Pietersen</td>
-                        <td>02-10-2008</td>
-                        <td>Premium</td>
-                        <td>Verzonden</td>
-                        <td><button class="btn btn-green" type="button">Bekijken</button></td>
-                    </tr>
-                    <tr>
-                        <td>#003</td>
-                        <td>Osama Binladen</td>
-                        <td>02-11-2008</td>
-                        <td>Medium</td>
-                        <td>Geleverd</td>
-                        <td><button class="btn btn-green" type="button">Bekijken</button></td>
-                    </tr>
-                    <tr>
-                        <td>#004</td>
-                        <td>Jeffrey Epstein</td>
-                        <td>03-12-2023</td>
-                        <td>Medium</td>
-                        <td>Geleverd</td>
-                        <td><button class="btn btn-green" type="button">Bekijken</button></td>
-                    </tr>
-                    <tr>
-                        <td>#005</td>
-                        <td>Los Pollos TV</td>
-                        <td>04-01-2024</td>
-                        <td>Premium</td>
-                        <td>Verzonden</td>
-                        <td><button class="btn btn-green" type="button">Bekijken</button></td>
-                    </tr>
-                    <tr>
-                        <td>#006</td>
-                        <td>Carti vampson</td>
-                        <td>05-01-2024</td>
-                        <td>Basic</td>
-                        <td>In behandeling</td>
-                        <td><button class="btn btn-green" type="button">Bekijken</button></td>
-                    </tr>
-                    <tr>
-                        <td>#007</td>
-                        <td>John Pork</td>
-                        <td>06-01-2024</td>
-                        <td>Premium</td>
-                        <td>Verzonden</td>
-                        <td><button class="btn btn-green" type="button">Bekijken</button></td>
-                    </tr>
-                    <tr>
-                        <td>#008</td>
-                        <td>Druski</td>
-                        <td>07-01-2024</td>
-                        <td>Medium</td>
-                        <td>In behandeling</td>
-                        <td><button class="btn btn-green" type="button">Bekijken</button></td>
-                    </tr>
-                    <tr>
-                        <td>#009</td>
-                        <td>Saleh</td>
-                        <td>08-01-2024</td>
-                        <td>Basic</td>
-                        <td>Geleverd</td>
-                        <td><button class="btn btn-green" type="button">Bekijken</button></td>
-                    </tr>
-                    <tr>
-                        <td>#010</td>
-                        <td>Saleh M4</td>
-                        <td>12-01-2024</td>
-                        <td>Premium</td>
-                        <td>Verzonden</td>
-                        <td><button class="btn btn-green" type="button">Bekijken</button></td>
-                    </tr>
-                    <tr>
-                        <td>#011</td>
-                        <td>Strahinja Zoranovich</td>
-                        <td>13-01-2024</td>
-                        <td>Medium</td>
-                        <td>In behandeling</td>
-                        <td><button class="btn btn-green" type="button">Bekijken</button></td>
-                    </tr>
-
-                </tbody>
-            </table>
+          <table class="orders-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Klant</th>
+                <th>Details</th>
+                <th>Offerte</th>
+                <th>Status</th>
+                <th>Actos</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>#001</td>
+                <td>Jan Jansen</td>
+                <td>02-09-2008</td>
+                <td>Basic</td>
+                <td>In behandeling</td>
+                <td>
+                  <button class="btn btn-green" type="button">Bekijken</button>
+                </td>
+              </tr>
+              <tr>
+                <td>#002</td>
+                <td>Piet Pietersen</td>
+                <td>02-10-2008</td>
+                <td>Premium</td>
+                <td>Verzonden</td>
+                <td>
+                  <button class="btn btn-green" type="button">Bekijken</button>
+                </td>
+              </tr>
+              <tr>
+                <td>#003</td>
+                <td>Osama Binladen</td>
+                <td>02-11-2008</td>
+                <td>Medium</td>
+                <td>Geleverd</td>
+                <td>
+                  <button class="btn btn-green" type="button">Bekijken</button>
+                </td>
+              </tr>
+              <tr>
+                <td>#004</td>
+                <td>Jeffrey Epstein</td>
+                <td>03-12-2023</td>
+                <td>Medium</td>
+                <td>Geleverd</td>
+                <td>
+                  <button class="btn btn-green" type="button">Bekijken</button>
+                </td>
+              </tr>
+              <tr>
+                <td>#005</td>
+                <td>Los Pollos TV</td>
+                <td>04-01-2024</td>
+                <td>Premium</td>
+                <td>Verzonden</td>
+                <td>
+                  <button class="btn btn-green" type="button">Bekijken</button>
+                </td>
+              </tr>
+              <tr>
+                <td>#006</td>
+                <td>Carti vampson</td>
+                <td>05-01-2024</td>
+                <td>Basic</td>
+                <td>In behandeling</td>
+                <td>
+                  <button class="btn btn-green" type="button">Bekijken</button>
+                </td>
+              </tr>
+              <tr>
+                <td>#007</td>
+                <td>John Pork</td>
+                <td>06-01-2024</td>
+                <td>Premium</td>
+                <td>Verzonden</td>
+                <td>
+                  <button class="btn btn-green" type="button">Bekijken</button>
+                </td>
+              </tr>
+              <tr>
+                <td>#008</td>
+                <td>Druski</td>
+                <td>07-01-2024</td>
+                <td>Medium</td>
+                <td>In behandeling</td>
+                <td>
+                  <button class="btn btn-green" type="button">Bekijken</button>
+                </td>
+              </tr>
+              <tr>
+                <td>#009</td>
+                <td>Saleh</td>
+                <td>08-01-2024</td>
+                <td>Basic</td>
+                <td>Geleverd</td>
+                <td>
+                  <button class="btn btn-green" type="button">Bekijken</button>
+                </td>
+              </tr>
+              <tr>
+                <td>#010</td>
+                <td>Saleh M4</td>
+                <td>12-01-2024</td>
+                <td>Premium</td>
+                <td>Verzonden</td>
+                <td>
+                  <button class="btn btn-green" type="button">Bekijken</button>
+                </td>
+              </tr>
+              <tr>
+                <td>#011</td>
+                <td>Strahinja Zoranovich</td>
+                <td>13-01-2024</td>
+                <td>Medium</td>
+                <td>In behandeling</td>
+                <td>
+                  <button class="btn btn-green" type="button">Bekijken</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-    </div>
+      </div>
 
-    <div id="pakketten" class="tabcontent">
+      <div id="pakketten" class="tabcontent">
         <h3>Pakketten</h3>
         <div class="packages-panel">
-            <div class="packages-header">Pakketten Beheren</div>
-            <div class="packages-table">
-                <div class="packages-row packages-head">
-                    <div>Naam</div>
-                    <div>Prijs</div>
-                    <div>Bewerk</div>
-                    <div>Verwijder</div>
-                </div>
-                <div class="packages-row">
-                    <div>Nieuw Paket</div>
-                    <div>€ 0,00</div>
-                    <div><button class="btn btn-muted" type="button">Bewerk</button></div>
-                    <div><button class="btn btn-danger" type="button">Verwijder</button></div>
-                </div>
+          <div class="packages-header">Pakketten Beheren</div>
+          <div class="packages-table">
+            <div class="packages-row packages-head">
+              <div>Naam</div>
+              <div>Prijs</div>
+              <div>Bewerk</div>
+              <div>Verwijder</div>
             </div>
-            <div class="packages-form">
-                <div class="packages-form-title">Nieuw Pakket</div>
-                <label class="packages-label" for="package-name">Naam</label>
-                <input id="package-name" class="packages-input" type="text">
-                <label class="packages-label" for="package-desc">Beschrijving</label>
-                <input id="package-desc" class="packages-input" type="text">
-                <label class="packages-label" for="package-price">Prijs</label>
-                <input id="package-price" class="packages-input" type="text">
-                <button class="btn btn-dark" type="button">Toevoegen</button>
+            <div class="packages-row">
+              <div>Nieuw Paket</div>
+              <div>€ 0,00</div>
+              <div>
+                <button class="btn btn-muted" type="button">Bewerk</button>
+              </div>
+              <div>
+                <button class="btn btn-danger" type="button">Verwijder</button>
+              </div>
             </div>
+          </div>
+          <div class="packages-form">
+            <div class="packages-form-title">Nieuw Pakket</div>
+            <label class="packages-label" for="package-name">Naam</label>
+            <input id="package-name" class="packages-input" type="text" />
+            <label class="packages-label" for="package-desc"
+              >Beschrijving</label
+            >
+            <input id="package-desc" class="packages-input" type="text" />
+            <label class="packages-label" for="package-price">Prijs</label>
+            <input id="package-price" class="packages-input" type="text" />
+            <button class="btn btn-dark" type="button">Toevoegen</button>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <div id="tarieven" class="tabcontent">
+      <div id="tarieven" class="tabcontent">
         <h3>Tarieven</h3>
         <div class="packages-panel">
-            <div class="packages-header">Tarieven Beheren (Optional)</div>
-            <div class="packages-form">
-                <label class="packages-label" for="rate-grass">Prijs per m² Gras</label>
-                <input id="rate-grass" class="packages-input" type="text">
-                <label class="packages-label" for="rate-tiles">Prijs per m² Tegels</label>
-                <input id="rate-tiles" class="packages-input" type="text">
-                <button class="btn btn-dark" type="button">Opslaan</button>
-            </div>
+          <div class="packages-header">Tarieven Beheren (Optional)</div>
+          <div class="packages-form">
+            <label class="packages-label" for="rate-grass"
+              >Prijs per m² Gras</label
+            >
+            <input id="rate-grass" class="packages-input" type="text" />
+            <label class="packages-label" for="rate-tiles"
+              >Prijs per m² Tegels</label
+            >
+            <input id="rate-tiles" class="packages-input" type="text" />
+            <button class="btn btn-dark" type="button">Opslaan</button>
+          </div>
         </div>
-    </div>
+      </div>
     </div>
 
     <script src="js/admin.js"></script>
     <script>
-        document.getElementById("defaultOpen").click();
+      document.getElementById("defaultOpen").click();
     </script>
-</body>
+  </body>
 </html>

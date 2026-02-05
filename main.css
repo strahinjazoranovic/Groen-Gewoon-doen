@@ -3,28 +3,39 @@ Secondary: #01BE11
 Accent #19932D
 Primary: #316849
 */
- 
-body, html {
-    font-family: "Inter", sans-serif;
-  margin: 0;
-  padding: 0;
+
+* {
+  box-sizing: border-box;
 }
 
-h1, h2, h3, h4, h5, h6 {
+body,
+html {
   margin: 0;
   padding: 0;
+  font-family: "Inter", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+  font-weight: 500;
 }
 
 .main {
-    border: 1px solid #000000;
-    height: 80%;
-    width: 50%;
-    padding: 20px;
+  border: 1px solid #000000;
+  height: 80%;
+  width: 50%;
+  padding: 20px;
   margin: 20px auto;
 }
- 
+
 .admin-header {
-    border: 1px solid #000000;
+  border: 1px solid #000000;
   background-color: #316849;
   color: white;
   padding: 12px;
@@ -50,13 +61,21 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-gradient {
-  background-image: linear-gradient(-180deg, #00D775, #00BD68);
+  background-image: linear-gradient(-180deg, #00d775, #00bd68);
   border-radius: 5px;
   padding: 10px 20px;
 }
 
+.btn-gradient:hover {
+  background: #00bd68;
+}
+
 .btn-green {
   background: #8ee58a;
+}
+
+.btn-green:hover {
+  background: #7adf76;
 }
 
 .btn-muted {
@@ -96,14 +115,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .tablinks.active {
-  background: #316849;
-  color: #ffffff;
-  border-color: #316849;
+  background: #ffffff;
+  color: #19932d;
+  border-color: #c8d2cc;
 }
 
 .tabcontent {
   display: none;
-  padding: 16px 4px;
+  padding: 16px;
 }
 
 .tabcontent.active {
@@ -152,7 +171,6 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   color: #2b5a41;
 }
-
 
 .packages-form {
   margin-top: 10px;
@@ -216,17 +234,106 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
 }
 
-.btn-green:hover {
-  background: #7adf76;
+#header {
+  color: rgb(0, 0, 0);
+  display: flex;
+  padding: 36px;
+  border-bottom: 1px solid #01be11;
+  box-shadow: 0 12px 12px 0px rgba(0, 0, 0, 0.1);
 }
 
-.btn-gradient:hover {
-  background: #00bd68;
-}
- 
 #title {
-    font-family: "Inter", sans-serif;
-    text-align: center;
+  font-size: 36px;
+  font-weight: 700;
+  text-align: left;
+}
+
+#title2 {
+  margin-top: 2rem;
+  font-size: 36px;
+  font-weight: 700;
+  text-align: center;
+}
+
+#welkom {
+  font-size: 18px;
+  margin-top: 48px;
+  text-align: center;
+}
+
+.header-text {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.text {
+  font-size: 24px;
+  margin-top: 12px;
+}
+
+#card {
+  border: 1px solid #19932d;
+  border-radius: 8px;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+  margin: 36px 125px;
+}
+
+#card-title {
+  border-bottom: 2px solid #01be11;
+  padding: 16px;
+}
+
+#card-content {
+  padding: 16px;
+}
+
+#card-content > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+#card-content > div h3 {
+  margin: 0;
+  min-width: 100px;
+}
+
+select {
+  margin-right: 0.5rem;
+  border-radius: 4px;
+  padding: 12px;
+  width: 25%;
+}
+
+input {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #656565;
+}
+
+#option {
+  width: 20px;
+  height: 20px;
+}
+
+#button {
+  background-image: linear-gradient(-180deg, #00d775, #00bd68);
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 6px 8px;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  height: 44px;
+  line-height: 44px;
+  padding: 0 20px;
+  border: 0;
+  font-weight: 600;
+  transition: transform 0.3s ease;
+}
+
+#button:hover {
+  transform: translateY(-2px);
 }
 
 @media (max-width: 900px) {
@@ -247,6 +354,10 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 600px) {
   .admin-header {
     flex-wrap: wrap;
+  }
+
+  #card {
+    margin: 12px;
   }
 
   .admin-header h2 {
@@ -274,7 +385,116 @@ h1, h2, h3, h4, h5, h6 {
 
   .btn-gradient {
     width: 100%;
-    min-width: 0;
   }
 }
 
+@media (max-width: 480px) {
+  #header {
+    padding: 16px;
+  }
+
+  #title {
+    font-size: 24px;
+    width: 100%;
+  }
+
+  #welkom {
+    font-size: 14px;
+    margin-top: 16px;
+    padding: 0 12px;
+  }
+
+  #card {
+    margin: 12px;
+  }
+
+  #card-title {
+    padding: 12px;
+  }
+
+  #card-title h1 {
+    font-size: 18px;
+  }
+
+  #card-content {
+    padding: 12px;
+  }
+
+  #card-content > div {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  #card-content > div h3 {
+    width: 100%;
+    min-width: unset;
+    margin-bottom: 4px;
+  }
+
+  #card-content > div input[type="number"] {
+    width: 100%;
+    max-width: unset;
+  }
+
+  select {
+    width: 100%;
+    max-width: unset;
+    margin-right: 0;
+    margin-bottom: 8px;
+  }
+
+  #button {
+    width: 100%;
+    height: auto;
+    padding: 12px 16px;
+    line-height: normal;
+  }
+
+  .orders-table {
+    font-size: 12px;
+  }
+
+  .orders-table th,
+  .orders-table td {
+    padding: 6px 4px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  #header {
+    padding: 20px 16px;
+  }
+
+  #title {
+    font-size: 28px;
+  }
+
+  #welkom {
+    font-size: 15px;
+    margin-top: 32px;
+  }
+
+  #card {
+    margin: 20px;
+  }
+
+  #card-content > div {
+    flex-wrap: wrap;
+  }
+
+  select {
+    width: 100%;
+    max-width: unset;
+    margin-right: 0;
+  }
+
+  #button {
+    margin-top: 12px;
+    width: 100%;
+  }
+
+  .orders-table {
+    font-size: 13px;
+  }
+}
