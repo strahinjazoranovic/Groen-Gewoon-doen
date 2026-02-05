@@ -11,7 +11,7 @@
 <body>
     <h1 id="title">Beheerszijde (Admin)</h1>
     <div class="main">
-    <div class="admin-header"> <h2> Admin — Groen & Gewoon doen</h2> <button class="logout-button">Logout</button> </div>
+    <div class="admin-header"> <h2> Admin — Groen & Gewoon doen</h2> <button class="btn btn-gradient" type="button">Logout</button> </div>
 
     <div class="tab">
         <button class="tablinks" onclick="Tabs(event, 'orders')" id="defaultOpen">Orders</button>
@@ -40,7 +40,7 @@
                         <td>02-09-2008</td>
                         <td>Basic</td>
                         <td>In behandeling</td>
-                        <td><button class="view-button" type="button">Bekijken</button></td>
+                        <td><button class="btn btn-green" type="button">Bekijken</button></td>
                     </tr>
                     <tr>
                         <td>#002</td>
@@ -48,7 +48,7 @@
                         <td>02-10-2008</td>
                         <td>Premium</td>
                         <td>Verzonden</td>
-                        <td><button class="view-button" type="button">Bekijken</button></td>
+                        <td><button class="btn btn-green" type="button">Bekijken</button></td>
                     </tr>
                     <tr>
                         <td>#003</td>
@@ -56,7 +56,7 @@
                         <td>02-11-2008</td>
                         <td>Medium</td>
                         <td>Geleverd</td>
-                        <td><button class="view-button" type="button">Bekijken</button></td>
+                        <td><button class="btn btn-green" type="button">Bekijken</button></td>
                     </tr>
                     <tr>
                         <td>#004</td>
@@ -64,7 +64,7 @@
                         <td>03-12-2023</td>
                         <td>Medium</td>
                         <td>Geleverd</td>
-                        <td><button class="view-button" type="button">Bekijken</button></td>
+                        <td><button class="btn btn-green" type="button">Bekijken</button></td>
                     </tr>
                     <tr>
                         <td>#005</td>
@@ -72,15 +72,15 @@
                         <td>04-01-2024</td>
                         <td>Premium</td>
                         <td>Verzonden</td>
-                        <td><button class="view-button" type="button">Bekijken</button></td>
+                        <td><button class="btn btn-green" type="button">Bekijken</button></td>
                     </tr>
                     <tr>
                         <td>#006</td>
-                        <td>Carti</td>
+                        <td>Carti vampson</td>
                         <td>05-01-2024</td>
                         <td>Basic</td>
                         <td>In behandeling</td>
-                        <td><button class="view-button" type="button">Bekijken</button></td>
+                        <td><button class="btn btn-green" type="button">Bekijken</button></td>
                     </tr>
                     <tr>
                         <td>#007</td>
@@ -88,7 +88,7 @@
                         <td>06-01-2024</td>
                         <td>Premium</td>
                         <td>Verzonden</td>
-                        <td><button class="view-button" type="button">Bekijken</button></td>
+                        <td><button class="btn btn-green" type="button">Bekijken</button></td>
                     </tr>
                     <tr>
                         <td>#008</td>
@@ -96,7 +96,7 @@
                         <td>07-01-2024</td>
                         <td>Medium</td>
                         <td>In behandeling</td>
-                        <td><button class="view-button" type="button">Bekijken</button></td>
+                        <td><button class="btn btn-green" type="button">Bekijken</button></td>
                     </tr>
                     <tr>
                         <td>#009</td>
@@ -104,7 +104,7 @@
                         <td>08-01-2024</td>
                         <td>Basic</td>
                         <td>Geleverd</td>
-                        <td><button class="view-button" type="button">Bekijken</button></td>
+                        <td><button class="btn btn-green" type="button">Bekijken</button></td>
                     </tr>
                     <tr>
                         <td>#010</td>
@@ -112,7 +112,7 @@
                         <td>12-01-2024</td>
                         <td>Premium</td>
                         <td>Verzonden</td>
-                        <td><button class="view-button" type="button">Bekijken</button></td>
+                        <td><button class="btn btn-green" type="button">Bekijken</button></td>
                     </tr>
                     <tr>
                         <td>#011</td>
@@ -120,7 +120,7 @@
                         <td>13-01-2024</td>
                         <td>Medium</td>
                         <td>In behandeling</td>
-                        <td><button class="view-button" type="button">Bekijken</button></td>
+                        <td><button class="btn btn-green" type="button">Bekijken</button></td>
                     </tr>
 
                 </tbody>
@@ -130,12 +130,47 @@
 
     <div id="pakketten" class="tabcontent">
         <h3>Pakketten</h3>
-        <p>Beheer de pakketten.</p>
+        <div class="packages-panel">
+            <div class="packages-header">Pakketten Beheren</div>
+            <div class="packages-table">
+                <div class="packages-row packages-head">
+                    <div>Naam</div>
+                    <div>Prijs</div>
+                    <div>Bewerk</div>
+                    <div>Verwijder</div>
+                </div>
+                <div class="packages-row">
+                    <div>Nieuw Paket</div>
+                    <div>€ 0,00</div>
+                    <div><button class="btn btn-muted" type="button">Bewerk</button></div>
+                    <div><button class="btn btn-danger" type="button">Verwijder</button></div>
+                </div>
+            </div>
+            <div class="packages-form">
+                <div class="packages-form-title">Nieuw Pakket</div>
+                <label class="packages-label" for="package-name">Naam</label>
+                <input id="package-name" class="packages-input" type="text">
+                <label class="packages-label" for="package-desc">Beschrijving</label>
+                <input id="package-desc" class="packages-input" type="text">
+                <label class="packages-label" for="package-price">Prijs</label>
+                <input id="package-price" class="packages-input" type="text">
+                <button class="btn btn-dark" type="button">Toevoegen</button>
+            </div>
+        </div>
     </div>
 
     <div id="tarieven" class="tabcontent">
         <h3>Tarieven</h3>
-        <p>Beheer de tarieven.</p>
+        <div class="packages-panel">
+            <div class="packages-header">Tarieven Beheren (Optional)</div>
+            <div class="packages-form">
+                <label class="packages-label" for="rate-grass">Prijs per m² Gras</label>
+                <input id="rate-grass" class="packages-input" type="text">
+                <label class="packages-label" for="rate-tiles">Prijs per m² Tegels</label>
+                <input id="rate-tiles" class="packages-input" type="text">
+                <button class="btn btn-dark" type="button">Opslaan</button>
+            </div>
+        </div>
     </div>
     </div>
 
