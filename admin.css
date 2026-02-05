@@ -43,7 +43,6 @@ background-color: initial;
   display: inline-block;
   height: 44px;
   line-height: 44px;
-  outline: 0;
   overflow: hidden;
   padding: 0 20px;
   pointer-events: auto;
@@ -77,9 +76,9 @@ background-color: initial;
 }
 
 .tablinks.active {
-  background: #ffffff;
-  color: #19932D;
-  border-color: #c8d2cc;
+  background: #316849;
+  color: #ffffff;
+  border-color: #316849;
 }
 
 .tabcontent {
@@ -98,6 +97,13 @@ background-color: initial;
   font-size: 14px;
 }
 
+.orders-scroll {
+  max-height: 50vh;
+  overflow: auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+}
+
 .orders-table th,
 .orders-table td {
   text-align: left;
@@ -109,6 +115,22 @@ background-color: initial;
   background: #f4f6f5;
   color: #316849;
   font-weight: 600;
+}
+
+.view-button {
+  background: #8ee58a;
+  color: #ffffff;
+  border: 0;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.view-button:hover {
+  background: #7adf76;
 }
 
 .logout-button:hover {
