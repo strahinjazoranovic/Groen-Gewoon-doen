@@ -4,6 +4,10 @@ Accent #19932D
 Primary: #316849
 */
 
+* {
+  box-sizing: border-box;
+}
+
 body,
 html {
   margin: 0;
@@ -18,20 +22,22 @@ h3,
 h4,
 h5,
 h6 {
+  font-weight: 500;
   margin: 0;
   padding: 0;
 }
 
 #header {
-  background-color: #316849;
-  color: white;
+  color: rgb(0, 0, 0);
   display: flex;
   padding: 36px;
+  border-bottom: 1px solid #01be11;
+  box-shadow: 0 12px 12px 0px rgba(0, 0, 0, 0.1);
 }
 
 #title {
   font-size: 36px;
-  font-weight: bolder;
+  font-weight: 700;
   text-align: left;
 }
 
@@ -93,7 +99,7 @@ select {
   background-color: initial;
   background-image: linear-gradient(-180deg, #00d775, #00bd68);
   border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 6px 8px;
   color: #ffffff;
   cursor: pointer;
   display: inline-block;
@@ -120,10 +126,12 @@ select {
   white-space: nowrap;
   z-index: 9;
   border: 0;
+  font-weight: 600;
+  transition: transform 0.3s ease;
 }
 
 #button:hover {
-  background: #00bd68;
+  transform: translateY(-2px);
 }
 
 .tablinks.active {
@@ -134,7 +142,7 @@ select {
 
 .tabcontent {
   display: none;
-  padding: 16px 4px;
+  padding: 16px;
 }
 
 .tabcontent.active {
@@ -159,4 +167,116 @@ select {
   background: #f4f6f5;
   color: #316849;
   font-weight: 600;
+}
+
+/* Mobile - Small devices (up to 480px) */
+@media (max-width: 480px) {
+  #header {
+    padding: 16px;
+  }
+
+  #title {
+    font-size: 24px;
+    width: 100%;
+  }
+
+  #welkom {
+    font-size: 14px;
+    margin-top: 16px;
+    padding: 0 12px;
+  }
+
+  #card {
+    margin: 12px;
+  }
+
+  #card-title {
+    padding: 12px;
+  }
+
+  #card-title h1 {
+    font-size: 18px;
+  }
+
+  #card-content {
+    padding: 12px;
+  }
+
+  #card-content > div {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  #card-content > div h3 {
+    width: 100%;
+    min-width: unset;
+    margin-bottom: 4px;
+  }
+
+  #card-content > div input[type="number"] {
+    width: 100%;
+    max-width: unset;
+  }
+
+  select {
+    width: 100%;
+    max-width: unset;
+    margin-right: 0;
+    margin-bottom: 8px;
+  }
+
+  #button {
+    width: 100%;
+    height: auto;
+    padding: 12px 16px;
+    line-height: normal;
+  }
+
+  .orders-table {
+    font-size: 12px;
+  }
+
+  .orders-table th,
+  .orders-table td {
+    padding: 6px 4px;
+  }
+}
+
+/* Tablet - Medium devices (481px to 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  #header {
+    padding: 20px 16px;
+  }
+
+  #title {
+    font-size: 28px;
+  }
+
+  #welkom {
+    font-size: 15px;
+    margin-top: 32px;
+  }
+
+  #card {
+    margin: 20px;
+  }
+
+  #card-content > div {
+    flex-wrap: wrap;
+  }
+
+  select {
+    width: 100%;
+    max-width: unset;
+    margin-right: 0;
+  }
+
+  #button {
+    width: 100%;
+  }
+
+  .orders-table {
+    font-size: 13px;
+  }
 }
