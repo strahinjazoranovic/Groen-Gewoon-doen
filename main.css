@@ -114,6 +114,36 @@ h6 {
   padding: 10px 14px;
 }
 
+.packages-subtab {
+  display: flex;
+  gap: 8px;
+  margin: 10px 0 12px;
+  border-bottom: 1px solid #d7dfdb;
+  padding-bottom: 8px;
+}
+
+.packages-subtablinks {
+  background: #ffffff;
+  border: 1px solid #cfd6d1;
+  border-bottom: 0;
+  border-radius: 6px 6px 0 0;
+  color: #2b5a41;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  padding: 8px 12px;
+}
+
+.packages-subtablinks.active {
+  background: #f4f6f5;
+  color: #1f6f44;
+  border-color: #b9c7c2;
+}
+
+.packages-subtabcontent {
+  display: none;
+}
+
 .tablinks.active {
   background: #ffffff;
   color: #19932d;
@@ -154,7 +184,7 @@ h6 {
 
 .packages-row {
   display: grid;
-  grid-template-columns: 2fr 1fr repeat(3, 1fr);
+  grid-template-columns: 2fr 2fr 1fr 1fr;
   gap: 8px;
   align-items: center;
   padding: 8px 10px;
@@ -172,6 +202,11 @@ h6 {
   color: #2b5a41;
 }
 
+.packages-actions {
+  display: flex;
+  gap: 6px;
+}
+
 .packages-form {
   margin-top: 10px;
   padding-top: 10px;
@@ -180,6 +215,10 @@ h6 {
   grid-template-columns: 120px 1fr;
   gap: 8px 10px;
   align-items: center;
+}
+
+.packages-form.hidden {
+  display: none;
 }
 
 .packages-form-title {
@@ -200,6 +239,15 @@ h6 {
   padding: 0 8px;
   font-family: "Inter", sans-serif;
   font-size: 13px;
+}
+
+.packages-textarea {
+  border: 1px solid #c0c8c4;
+  border-radius: 4px;
+  padding: 6px 8px;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  resize: vertical;
 }
 
 .packages-add {
