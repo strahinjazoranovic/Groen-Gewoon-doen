@@ -4,4 +4,6 @@ Trellobord: https://trello.com/invite/b/6982f78c5e6de9068af4845c/ATTId161fb627c3
 
 Git: https://github.com/strahinjazoranovic/Groen-Gewoon-doen
 
-Install NPM with: npm install express body-parser cors
+Install NPM with: npm install express body-parser cors,
+
+To start the node server you need to type "node server start" and keep the terminal window open

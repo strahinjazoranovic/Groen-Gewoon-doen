@@ -27,7 +27,6 @@
           <option value="standard">Standard</option>
           <option value="premium">Premium</option>
         </select>
-        <button id="button">Bestel</button>
       </div>
     </div>
 
@@ -51,7 +50,9 @@
         <div id="button-container">
           <input type="checkbox" id="option" name="option" value="option" />
           <label for="option">Opties</label><br />
-          <button id="button">Bereken Offerte</button>
+          <button id="button" onclick="placeCustomOrder()">
+            Bestel
+          </button>
         </div>
       </div>
     </div>
@@ -65,10 +66,10 @@
           <thead>
             <tr>
               <th>Order ID</th>
-              <th>Pakket / Info</th>
-              <th>Offerte</th>
+              <th>Naam</th>
+              <th>Aantal</th>
+              <th>Prijs</th>
               <th>Status</th>
-              <th>Datum</th>
             </tr>
           </thead>
           <tbody>
@@ -91,6 +92,7 @@
       </div>
     </div>
 
+    <script src="js/functions.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>
