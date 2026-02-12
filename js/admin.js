@@ -86,18 +86,18 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function PackageTabs(evt, tabName) {
-	var i, subtabcontent, subtablinks;
+  var i, subtabcontent, subtablinks;
 
-	subtabcontent = document.getElementsByClassName("packages-subtabcontent");
-	for (i = 0; i < subtabcontent.length; i++) {
-		subtabcontent[i].style.display = "none";
-	}
+  subtabcontent = document.getElementsByClassName("packages-subtabcontent");
+  for (i = 0; i < subtabcontent.length; i++) {
+    subtabcontent[i].style.display = "none";
+  }
 
-	subtablinks = document.getElementsByClassName("packages-subtablinks");
-	for (i = 0; i < subtablinks.length; i++) {
-		subtablinks[i].className = subtablinks[i].className.replace(" active", "");
-	}
+  subtablinks = document.getElementsByClassName("packages-subtablinks");
+  for (i = 0; i < subtablinks.length; i++) {
+    subtablinks[i].className = subtablinks[i].className.replace(" active", "");
+  }
 
-	document.getElementById(tabName).style.display = "block";
-	evt.currentTarget.className += " active";
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " active";
 }

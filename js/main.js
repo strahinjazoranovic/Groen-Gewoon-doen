@@ -65,11 +65,11 @@ async function placeCustomOrder() {
     hegging * priceRates.hedge;
 
   const customerName = prompt("Voer uw naam in:");
-  if (customerName == 0 ){
+  if (customerName == 0) {
     alert("Naam is verplicht");
     return;
   }
-  
+
   const newOrder = {
     customer: customerName,
     items: [

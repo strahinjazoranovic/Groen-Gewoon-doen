@@ -176,28 +176,31 @@
             >
               Bewerk
             </button>
-              <button
-                class="packages-subtablinks"
-                onclick="PackageTabs(event, 'packages-nieuw')"
-                data-tab="packages-nieuw"
-                type="button"
-              >
-                Nieuw Pakket
-              </button>
-              </div>
+            <button
+              class="packages-subtablinks"
+              onclick="PackageTabs(event, 'packages-nieuw')"
+              data-tab="packages-nieuw"
+              type="button"
+            >
+              Nieuw Pakket
+            </button>
+          </div>
 
-              <div id="packages-nieuw" class="packages-subtabcontent" style="display: block;">
-              <div class="packages-form">
-                <div class="packages-form-title">Nieuw Pakket</div>
-                <label class="packages-label" for="package-name">Naam</label>
-                <input id="package-name" class="packages-input" type="text" />
-                <label class="packages-label" for="package-desc">Beschrijving</label>
-                <input id="package-desc" class="packages-input" type="text" />
-                <label class="packages-label" for="package-price">Prijs</label>
-                <input id="package-price" class="packages-input" type="text" />
-                <button class="btn btn-dark" type="button">Toevoegen</button>
-              </div>
-              </div>
+          <div
+            id="packages-nieuw"
+            class="packages-subtabcontent"
+            style="display: block"
+          >
+            <div class="packages-form">
+              <div class="packages-form-title">Nieuw Pakket</div>
+              <label class="packages-label" for="package-name">Naam</label>
+              <input id="package-name" class="packages-input" type="text" />
+              <label class="packages-label" for="package-price">Prijs</label>
+              <input id="package-id" type="hidden">
+              <input id="package-price" class="packages-input" type="text" />
+              <button class="btn btn-dark" type="button">Toevoegen</button>
+            </div>
+          </div>
 
           <div id="packages-bewerk" class="packages-subtabcontent">
             <div class="packages-table">
@@ -213,7 +216,9 @@
                 <div>€ 49,00</div>
                 <div class="packages-actions">
                   <button class="btn btn-muted" type="button">Bewerk</button>
-                  <button class="btn btn-danger" type="button">Verwijder</button>
+                  <button class="btn btn-danger" type="button">
+                    Verwijder
+                  </button>
                 </div>
               </div>
               <div class="packages-row">
@@ -222,7 +227,9 @@
                 <div>€ 79,00</div>
                 <div class="packages-actions">
                   <button class="btn btn-muted" type="button">Bewerk</button>
-                  <button class="btn btn-danger" type="button">Verwijder</button>
+                  <button class="btn btn-danger" type="button">
+                    Verwijder
+                  </button>
                 </div>
               </div>
               <div class="packages-row">
@@ -231,22 +238,12 @@
                 <div>€ 129,00</div>
                 <div class="packages-actions">
                   <button class="btn btn-muted" type="button">Bewerk</button>
-                  <button class="btn btn-danger" type="button">Verwijder</button>
+                  <button class="btn btn-danger" type="button">
+                    Verwijder
+                  </button>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="packages-form">
-            <div class="packages-form-title">Nieuw Pakket</div>
-            <label class="packages-label" for="package-name">Naam</label>
-            <input id="package-name" class="packages-input" type="text" />
-            <label class="packages-label" for="package-desc"
-              >Beschrijving</label
-            >
-            <input id="package-desc" class="packages-input" type="text" />
-            <label class="packages-label" for="package-price">Prijs</label>
-            <input id="package-price" class="packages-input" type="text" />
-            <button class="btn btn-dark" type="button">Toevoegen</button>
           </div>
         </div>
       </div>
