@@ -1,0 +1,56 @@
+{
+  "orders": [
+    {
+      "id": 1,
+      "customer": "Strahinja Zoranovic",
+      "items": [
+        {
+          "product": "",
+          "quantity": 1,
+          "price": "499,99"
+        }
+      ],
+      "total": "699,99",
+      "status": "Verzonden"
+    },
+    {
+      "id": 2,
+      "customer": "Reda Rbib",
+      "items": [
+        {
+          "product": "",
+          "quantity": 1,
+          "price": "499,99"
+        }
+      ],
+      "total": "499,99",
+      "status": "In behandeling"
+    },
+    {
+      "id": 3,
+      "customer": "Saleh Saleh",
+      "items": [
+        {
+          "product": "",
+          "quantity": 1,
+          "price": "499,99"
+        }
+      ],
+      "total": "499,99",
+      "status": "In behandeling"
+    },
+    {
+      "id": 4,
+      "customer": "Test",
+      "items": [
+        {
+          "product": "Custom: 1m² gras, 1m² tegels, 1m² hegging",
+          "quantity": 1
+        }
+      ],
+      "total": "60.00",
+      "status": "In behandeling",
+      "createdAt": "2026-02-12T10:41:14.585Z"
+    }
+  ]
+}
