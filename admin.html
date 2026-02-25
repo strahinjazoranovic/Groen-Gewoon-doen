@@ -25,9 +25,6 @@
         >
           Orders
         </button>
-        <button class="tablinks" onclick="Tabs(event, 'incoming')">
-          Inkomende orders
-        </button>
         <button class="tablinks" onclick="Tabs(event, 'pakketten')">
           Pakketten
         </button>
@@ -36,59 +33,10 @@
         </button>
       </div>
 
-      <div id="incoming" class="tabcontent">
-        <h3>Inkomende orders</h3>
-        <div class="orders-scroll">
-          <table class="orders-table">
-            <thead>
-              <tr>
-                <th>Order ID</th>
-                <th>Klant</th>
-                <th>Datum</th>
-                <th>Offerte</th>
-                <th>Acties</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>#201</td>
-                <td>A. de Vries</td>
-                <td>12-02-2024</td>
-                <td>Basis</td>
-                <td>
-                  <button class="btn btn-green" type="button">Accepteer</button>
-                  <button class="btn btn-danger" type="button">Weiger</button>
-                </td>
-              </tr>
-              <tr>
-                <td>#202</td>
-                <td>B. Janssen</td>
-                <td>13-02-2024</td>
-                <td>Premium</td>
-                <td>
-                  <button class="btn btn-green" type="button">Accepteer</button>
-                  <button class="btn btn-danger" type="button">Weiger</button>
-                </td>
-              </tr>
-              <tr>
-                <td>#203</td>
-                <td>C. Bakker</td>
-                <td>14-02-2024</td>
-                <td>Standaard</td>
-                <td>
-                  <button class="btn btn-green" type="button">Accepteer</button>
-                  <button class="btn btn-danger" type="button">Weiger</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
       <div id="orders" class="tabcontent">
         <h3>Orders overzicht</h3>
         <div class="orders-scroll">
-          <table id="orders-table-main" class="orders-table">
+          <table class="orders-table">
             <thead>
               <tr>
                 <th>Order ID</th>
@@ -231,43 +179,6 @@
 
     <script src="js/functions.js"></script>
     <script src="js/admin.js"></script>
-    <div id="order-modal" class="modal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3>Order details</h3>
-          <button id="order-modal-close" class="modal-close" type="button">
-            ×
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="modal-body-row">
-            <span class="modal-body-label">Order ID</span>
-            <span id="modal-order-id"></span>
-          </div>
-          <div class="modal-body-row">
-            <span class="modal-body-label">Klant</span>
-            <span id="modal-order-customer"></span>
-          </div>
-          <div class="modal-body-row">
-            <span class="modal-body-label">Datum</span>
-            <span id="modal-order-date"></span>
-          </div>
-          <div class="modal-body-row">
-            <span class="modal-body-label">Offerte</span>
-            <span id="modal-order-offer"></span>
-          </div>
-          <div class="modal-body-row">
-            <span class="modal-body-label">Status</span>
-            <span id="modal-order-status"></span>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button id="order-close" class="btn btn-muted" type="button">
-            Sluiten
-          </button>
-        </div>
-      </div>
-    </div>
     <script>
       document.getElementById("defaultOpen").click();
     </script>
