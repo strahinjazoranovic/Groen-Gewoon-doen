@@ -164,3 +164,17 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 	}
 });
+
+//Read rate from rates.json test
+async function fetchRates() {
+  try {
+    const response = await fetch("/data/rates/rates.json");
+    if (!response.ok) throw new Error("Fout");
+    const rates = await response.json();
+    console.log("Rates:", rates);
+    return rates;
+  } catch (error) {
+    console.error("Rates fetch failed:", error);
+    return null;
+  }
+}
