@@ -92,17 +92,17 @@
             <thead>
               <tr>
                 <th>Order ID</th>
-                <th>Klant</th>
-                <th>Details</th>
-                <th>Offerte</th>
+                <th>Naam</th>
+                <th>Aantal</th>
+                <th>Prijs</th>
                 <th>Status</th>
-                <th>Actos</th>
+                <th>Acties</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>#001</td>
-                <td>Jan Jansen</td>
+                <td>Placeholder1</td>
                 <td>02-09-2008</td>
                 <td>Basic</td>
                 <td>In behandeling</td>
@@ -112,100 +112,10 @@
               </tr>
               <tr>
                 <td>#002</td>
-                <td>Piet Pietersen</td>
+                <td>Placeholder2</td>
                 <td>02-10-2008</td>
                 <td>Premium</td>
                 <td>Verzonden</td>
-                <td>
-                  <button class="btn btn-green" type="button">Bekijken</button>
-                </td>
-              </tr>
-              <tr>
-                <td>#003</td>
-                <td>Osama Binladen</td>
-                <td>02-11-2008</td>
-                <td>Medium</td>
-                <td>Geleverd</td>
-                <td>
-                  <button class="btn btn-green" type="button">Bekijken</button>
-                </td>
-              </tr>
-              <tr>
-                <td>#004</td>
-                <td>Jeffrey Epstein</td>
-                <td>03-12-2023</td>
-                <td>Medium</td>
-                <td>Geleverd</td>
-                <td>
-                  <button class="btn btn-green" type="button">Bekijken</button>
-                </td>
-              </tr>
-              <tr>
-                <td>#005</td>
-                <td>Los Pollos TV</td>
-                <td>04-01-2024</td>
-                <td>Premium</td>
-                <td>Verzonden</td>
-                <td>
-                  <button class="btn btn-green" type="button">Bekijken</button>
-                </td>
-              </tr>
-              <tr>
-                <td>#006</td>
-                <td>Carti vampson</td>
-                <td>05-01-2024</td>
-                <td>Basic</td>
-                <td>In behandeling</td>
-                <td>
-                  <button class="btn btn-green" type="button">Bekijken</button>
-                </td>
-              </tr>
-              <tr>
-                <td>#007</td>
-                <td>John Pork</td>
-                <td>06-01-2024</td>
-                <td>Premium</td>
-                <td>Verzonden</td>
-                <td>
-                  <button class="btn btn-green" type="button">Bekijken</button>
-                </td>
-              </tr>
-              <tr>
-                <td>#008</td>
-                <td>Druski</td>
-                <td>07-01-2024</td>
-                <td>Medium</td>
-                <td>In behandeling</td>
-                <td>
-                  <button class="btn btn-green" type="button">Bekijken</button>
-                </td>
-              </tr>
-              <tr>
-                <td>#009</td>
-                <td>Saleh</td>
-                <td>08-01-2024</td>
-                <td>Basic</td>
-                <td>Geleverd</td>
-                <td>
-                  <button class="btn btn-green" type="button">Bekijken</button>
-                </td>
-              </tr>
-              <tr>
-                <td>#010</td>
-                <td>Saleh M4</td>
-                <td>12-01-2024</td>
-                <td>Premium</td>
-                <td>Verzonden</td>
-                <td>
-                  <button class="btn btn-green" type="button">Bekijken</button>
-                </td>
-              </tr>
-              <tr>
-                <td>#011</td>
-                <td>Strahinja Zoranovich</td>
-                <td>13-01-2024</td>
-                <td>Medium</td>
-                <td>In behandeling</td>
                 <td>
                   <button class="btn btn-green" type="button">Bekijken</button>
                 </td>
@@ -228,28 +138,31 @@
             >
               Bewerk
             </button>
-              <button
-                class="packages-subtablinks"
-                onclick="PackageTabs(event, 'packages-nieuw')"
-                data-tab="packages-nieuw"
-                type="button"
-              >
-                Nieuw Pakket
-              </button>
-              </div>
+            <button
+              class="packages-subtablinks"
+              onclick="PackageTabs(event, 'packages-nieuw')"
+              data-tab="packages-nieuw"
+              type="button"
+            >
+              Nieuw Pakket
+            </button>
+          </div>
 
-              <div id="packages-nieuw" class="packages-subtabcontent" style="display: block;">
-              <div class="packages-form">
-                <div class="packages-form-title">Nieuw Pakket</div>
-                <label class="packages-label" for="package-name">Naam</label>
-                <input id="package-name" class="packages-input" type="text" />
-                <label class="packages-label" for="package-desc">Beschrijving</label>
-                <input id="package-desc" class="packages-input" type="text" />
-                <label class="packages-label" for="package-price">Prijs</label>
-                <input id="package-price" class="packages-input" type="text" />
-                <button class="btn btn-dark" type="button">Toevoegen</button>
-              </div>
-              </div>
+          <div
+            id="packages-nieuw"
+            class="packages-subtabcontent"
+            style="display: block"
+          >
+            <div class="packages-form">
+              <div class="packages-form-title">Nieuw Pakket</div>
+              <label class="packages-label" for="package-name">Naam</label>
+              <input id="package-name" class="packages-input" type="text" />
+              <label class="packages-label" for="package-price">Prijs</label>
+              <input id="package-id" type="hidden">
+              <input id="package-price" class="packages-input" type="text" />
+              <button class="btn btn-dark" type="button">Toevoegen</button>
+            </div>
+          </div>
 
           <div id="packages-bewerk" class="packages-subtabcontent">
             <div class="packages-table">
@@ -265,7 +178,9 @@
                 <div>€ 49,00</div>
                 <div class="packages-actions">
                   <button class="btn btn-muted" type="button">Bewerk</button>
-                  <button class="btn btn-danger" type="button">Verwijder</button>
+                  <button class="btn btn-danger" type="button">
+                    Verwijder
+                  </button>
                 </div>
               </div>
               <div class="packages-row">
@@ -274,7 +189,9 @@
                 <div>€ 79,00</div>
                 <div class="packages-actions">
                   <button class="btn btn-muted" type="button">Bewerk</button>
-                  <button class="btn btn-danger" type="button">Verwijder</button>
+                  <button class="btn btn-danger" type="button">
+                    Verwijder
+                  </button>
                 </div>
               </div>
               <div class="packages-row">
@@ -283,22 +200,10 @@
                 <div>€ 129,00</div>
                 <div class="packages-actions">
                   <button class="btn btn-muted" type="button">Bewerk</button>
-                  <button class="btn btn-danger" type="button">Verwijder</button>
+                  <button class="btn btn-danger" type="button">
+                    Verwijder
+                  </button>
                 </div>
-              </div>
-            </div>
-            <div id="packages-nieuw" class="packages-subtabcontent">
-              <div class="packages-form">
-                <div class="packages-form-title">Nieuw Pakket</div>
-                <label class="packages-label" for="package-name">Naam</label>
-                <input id="package-name" class="packages-input" type="text" />
-                <label class="packages-label" for="package-desc"
-                  >Beschrijving</label
-                >
-                <input id="package-desc" class="packages-input" type="text" />
-                <label class="packages-label" for="package-price">Prijs</label>
-                <input id="package-price" class="packages-input" type="text" />
-                <button class="btn btn-dark" type="button">Toevoegen</button>
               </div>
             </div>
           </div>
@@ -308,7 +213,7 @@
       <div id="tarieven" class="tabcontent">
         <h3>Tarieven</h3>
         <div class="packages-panel">
-          <div class="packages-header">Tarieven Beheren (Optional)</div>
+          <div class="packages-header">Tarieven Beheren</div>
           <div class="packages-form">
             <label class="packages-label" for="rate-grass"
               >Prijs per m² Gras</label
@@ -324,6 +229,7 @@
       </div>
     </div>
 
+    <script src="js/functions.js"></script>
     <script src="js/admin.js"></script>
     <div id="order-modal" class="modal">
       <div class="modal-content">
