@@ -20,37 +20,42 @@
     </div>
     <div id="card">
       <div id="card-title">
-        <h1>Standard Pakketten</h1>
+        <h1>Pakketten</h1>
       </div>
       <div id="card-content">
         <select name="pakketen" id="pakketen">
-          <option value="standard">Standard</option>
-          <option value="premium">Premium</option>
+          <option value="Standard">Standard</option>
+          <option value="Premium">Premium</option>
+          <option value="Offerte">Custom offerte</option>
         </select>
+        <button id="button-standard" onclick="placeStandardOrder()">
+          Bestel pakket
+        </button>
       </div>
-    </div>
-
-    <div id="card">
-      <div id="card-title">
-        <h1>Custom Offerte</h1>
-      </div>
-      <div id="card-content">
-        <div>
-          <h3>m2 gras</h3>
-          <input type="number" id="gras" name="gras" />
+      <div id="card-offerte">
+        <div id="card-title">
+          <h1>Custom Offerte</h1>
         </div>
-        <div>
-          <h3>m2 tegels</h3>
-          <input type="number" id="tegels" name="tegels" />
-        </div>
-        <div>
-          <h3>m2 hegging</h3>
-          <input type="number" id="hegging" name="hegging" />
-        </div>
-        <div id="button-container">
-          <input type="checkbox" id="option" name="option" value="option" />
-          <label for="option">Opties</label><br />
-          <button id="button" onclick="placeCustomOrder()">Bestel</button>
+        <div id="card-content">
+          <div>
+            <h3>m2 gras</h3>
+            <input type="number" id="gras" name="gras" />
+          </div>
+          <div>
+            <h3>m2 tegels</h3>
+            <input type="number" id="tegels" name="tegels" />
+          </div>
+          <div>
+            <h3>m2 hegging</h3>
+            <input type="number" id="hegging" name="hegging" />
+          </div>
+          <div id="button-container">
+            <!-- <input type="checkbox" id="option" name="option" value="option" />
+          <label for="option">Opties</label><br /> -->
+            <button id="button-offerte" onclick="placeCustomOrder()">
+              Bestel custom offerte
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -65,7 +70,8 @@
             <tr>
               <th>Order ID</th>
               <th>Naam</th>
-              <th>Aantal</th>
+              <th>Address</th>
+              <th>Leverdatum</th>
               <th>Prijs</th>
               <th>Status</th>
             </tr>

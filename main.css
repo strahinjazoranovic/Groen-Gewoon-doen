@@ -326,6 +326,10 @@ h6 {
   margin: 36px 125px;
 }
 
+#card-offerte {
+  display: none;
+}
+
 #card-title {
   border-bottom: 2px solid #01be11;
   padding: 16px;
@@ -365,7 +369,8 @@ input {
   height: 20px;
 }
 
-#button {
+#button,
+#button-standard {
   background-image: linear-gradient(-180deg, #00d775, #00bd68);
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.1) 0 6px 8px;
@@ -380,7 +385,26 @@ input {
   transition: transform 0.3s ease;
 }
 
-#button:hover {
+#button-offerte {
+  display: none;
+  background-image: linear-gradient(-180deg, #00d775, #00bd68);
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 6px 8px;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  height: 44px;
+  width: 293px;
+  line-height: 44px;
+  padding: 0 20px;
+  border: 0;
+  font-weight: 600;
+  transition: transform 0.3s ease;
+}
+
+#button,
+#button-standard,
+#button-offerte:hover {
   transform: translateY(-2px);
 }
 
@@ -456,6 +480,10 @@ input {
     margin: 12px;
   }
 
+  #card-offerte {
+    margin: 12px;
+  }
+
   #card-title {
     padding: 12px;
   }
@@ -524,6 +552,10 @@ input {
   }
 
   #card {
+    margin: 20px;
+  }
+
+  #card-offerte {
     margin: 20px;
   }
 

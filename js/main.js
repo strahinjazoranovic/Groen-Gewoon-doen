@@ -5,31 +5,6 @@ let priceRates = {
   hedge: 20.0,
 };
 
-// // Order standard package(this function does not work)
-// async function orderStandardPackage() {
-//   const packageSelect = document.getElementById("pakketen");
-//   const selectedOption =
-//     packageSelect.options[packageSelect.selectedIndex].text;
-
-//   const customerName = prompt("Voer uw naam in:");
-//   if (!customerName) return;
-
-//   const newOrder = {
-//     customer: customerName,
-//     items: [{ product: selectedOption, quantity: 1 }],
-//     total: "0,00",
-//     status: "In behandeling",
-//   };
-
-//   const result = await createOrder(newOrder);
-//   if (result) {
-//     alert("Order placed successfully!");
-//     displayOrders(".orders-table");
-//   } else {
-//     alert("Failed to place order");
-//   }
-// }
-
 // Calculate custom quote
 function calculateQuote() {
   const gras = parseFloat(document.getElementById("gras").value) || 0;
@@ -48,14 +23,82 @@ function calculateQuote() {
   return total;
 }
 
-// Place custom quote order
+// Place standard package order
+async function placeStandardOrder() {
+  const selectedPackage = document.getElementById("pakketen").value;
+
+  let total = 0;
+
+  if (selectedPackage === "Standard") {
+    total = 39.99;
+  } else if (selectedPackage === "Premium") {
+    total = 49.99;
+  }
+
+  const customerName = prompt("Voer uw naam in:");
+  const address = prompt("Voer uw adres in: Straat, Postcode en Stad");
+  const deliveryDateTime = prompt(
+    "Voer de gewenste leverdatum in (bijv. 26-02-2026):",
+  );
+
+  if (!customerName || !address || !deliveryDateTime) {
+    alert("Naam, adres en leverdatum/tijd zijn verplicht");
+    return;
+  }
+
+  const newStandardOrder = {
+    customer: customerName,
+    address: address,
+    delivery: deliveryDateTime,
+    pakket: selectedPackage,
+    items: [
+      {
+        product: `Pakket: ${selectedPackage}`,
+        quantity: 1,
+      },
+    ],
+    total: total.toFixed(2),
+    status: "In behandeling",
+  };
+
+  const result = await createOrder(newStandardOrder);
+
+  if (result) {
+    alert("Order placed successfully!");
+    displayOrders(".orders-table");
+  } else {
+    alert("Failed to place order");
+  }
+}
+
+// Listen for package selection changes and show offerte card if "offerte" is selected
+document.getElementById("pakketen").addEventListener("change", function () {
+  if (this.value === "Offerte") {
+    document.getElementById("card-offerte").style.display = "block";
+    document.getElementById("button-standard").style.display = "none";
+    document.getElementById("button-offerte").style.display = "block";
+  } else {
+    document.getElementById("card-offerte").style.display = "none";
+    document.getElementById("button-standard").style.display = "inline-block";
+    document.getElementById("button-offerte").style.display = "none";
+  }
+});
+
+// Place custom order
 async function placeCustomOrder() {
+  const selectedPackage = document.getElementById("pakketen").value;
+
   const gras = parseFloat(document.getElementById("gras").value) || 0;
   const tegels = parseFloat(document.getElementById("tegels").value) || 0;
   const hegging = parseFloat(document.getElementById("hegging").value) || 0;
 
-  if (gras === 0 && tegels === 0 && hegging === 0) {
-    alert("Vul alstublieft minstens één waarde in");
+  if (
+    (gras === 0 && tegels === 0 && hegging === 0) ||
+    gras < 0 ||
+    tegels < 0 ||
+    hegging < 0
+  ) {
+    alert("Vul alstublieft een geldig aantal in");
     return;
   }
 
@@ -65,13 +108,21 @@ async function placeCustomOrder() {
     hegging * priceRates.hedge;
 
   const customerName = prompt("Voer uw naam in:");
-  if (customerName == 0) {
-    alert("Naam is verplicht");
+  const address = prompt("Voer uw adres in: Straat, Postcode en Stad");
+  const deliveryDateTime = prompt(
+    "Voer de gewenste leverdatum in (bijv. 26-02-2026):",
+  );
+
+  if (!customerName || !address || !deliveryDateTime) {
+    alert("Naam, adres en leverdatum/tijd zijn verplicht");
     return;
   }
 
-  const newOrder = {
+  const newCustomOrder = {
     customer: customerName,
+    address: address,
+    delivery: deliveryDateTime,
+    pakket: selectedPackage,
     items: [
       {
         product: `Custom: ${gras}m² gras, ${tegels}m² tegels, ${hegging}m² hegging`,
@@ -82,7 +133,7 @@ async function placeCustomOrder() {
     status: "In behandeling",
   };
 
-  const result = await createOrder(newOrder);
+  const result = await createOrder(newCustomOrder);
   if (result) {
     alert("Order placed successfully!");
     document.getElementById("gras").value = "";

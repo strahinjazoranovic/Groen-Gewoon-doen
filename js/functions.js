@@ -39,8 +39,9 @@ async function displayOrders(tableSelector) {
     row.innerHTML = `
       <td>${order.id}</td>
       <td>${order.customer}</td>
-      <td>${order.items ? order.items.length + " artikel(s)" : "N/A"}</td>
-      <td>€${order.total || 0}</td>
+      <td>${order.address}</td>
+      <td>${order.delivery}</td>
+      <td>€${order.total}</td>
       <td>${order.status}</td>
     `;
     tbody.appendChild(row);
@@ -61,12 +62,14 @@ async function displayOrdersAdmin(tableSelector) {
     row.innerHTML = `
       <td>${order.id}</td>
       <td>${order.customer}</td>
-      <td>${order.items ? order.items.length + " artikel(s)" : "N/A"}</td>
-      <td>€${order.total || 0}</td>
+      <td>${order.pakket}</td>
+      <td>${order.address}</td>
+      <td>${order.delivery}</td>
+      <td>€${order.total}</td>
       <td>${order.status}</td>
       <td>
         <button class="btn btn-green" type="button" onclick="updateOrderStatus(${order.id})">Update</button>
-        <button class="btn btn-danger" type="button" onclick="deleteOrderAdmin(${order.id})" style="margin-left: 5px;">Verwijder</button>
+        <button class="btn btn-danger" type="button" onclick="deleteOrderAdmin(${order.id})">Verwijder</button>
       </td>   
     `;
     tbody.appendChild(row);

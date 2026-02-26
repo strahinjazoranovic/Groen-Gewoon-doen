@@ -3,14 +3,12 @@
     {
       "id": 2,
       "name": "Premium pakket",
-      "author": "Strahinja Zoranovic",
       "price": "49,99"
     },
     {
       "id": 3,
       "name": "Standard pakket",
-      "price": "39,99",
-      "createdAt": "2026-02-12T10:22:30.901Z"
+      "price": "39,99"
     }
   ]
 }
