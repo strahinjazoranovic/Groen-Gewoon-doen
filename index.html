@@ -39,18 +39,25 @@
         <div id="card-content">
           <div>
             <h3>m2 gras</h3>
-            <input type="number" id="gras" name="gras" />
+            <input type="number" id="gras" name="gras" min="0" step="0.01" value="0" />
           </div>
           <div>
             <h3>m2 tegels</h3>
-            <input type="number" id="tegels" name="tegels" />
+            <input type="number" id="tegels" name="tegels" min="0" step="0.01" value="0" />
           </div>
           <div>
             <h3>m2 hegging</h3>
-            <input type="number" id="hegging" name="hegging" />
+            <input type="number" id="hegging" name="hegging" min="0" step="0.01" value="0" />
           </div>
+
+        <hr>
+
+        <div>Subtotaal maaien: <span id="grassSubtotal">€ 0.00</span></div>
+        <div>Subtotaal tegels: <span id="tilesSubtotal">€ 0.00</span></div>
+        <div>Subtotaal hegging: <span id="heggingSubtotal">€ 0.00</span></div>
+
           <div id="button-container">
-            <!-- <input type="checkbox" id="option" name="option" value="option" />
+            <!-- <input type="checkbox" id="option" name="option" value="option" onclick="" />
           <label for="option">Opties</label><br /> -->
             <button id="button-offerte" onclick="placeCustomOrder()">
               Bestel custom offerte
