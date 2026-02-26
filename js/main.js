@@ -1,27 +1,61 @@
-// Price rates for custom quotes
-let priceRates = {
-  grass: 15.0,
-  tiles: 25.0,
-  hedge: 20.0,
-};
-
-// Calculate custom quote
-function calculateQuote() {
-  const gras = parseFloat(document.getElementById("gras").value) || 0;
-  const tegels = parseFloat(document.getElementById("tegels").value) || 0;
-  const hegging = parseFloat(document.getElementById("hegging").value) || 0;
-
-  const total =
-    gras * priceRates.grass +
-    tegels * priceRates.tiles +
-    hegging * priceRates.hedge;
-
-  alert(
-    `Offerte: €${total.toFixed(2)}\n\n${gras}m² gras: €${(gras * priceRates.grass).toFixed(2)}\n${tegels}m² tegels: €${(tegels * priceRates.tiles).toFixed(2)}\n${hegging}m² hegging: €${(hegging * priceRates.hedge).toFixed(2)}`,
-  );
-
-  return total;
+// Read rate from rates.json
+async function fetchRates() {
+  const response = await fetch("/data/rates/rates.json");
+  if (!response.ok) throw new Error("Failed to fetch rates");
+  return await response.json();
 }
+
+let ratesCache = null;
+
+function eur(value) {
+  return "€ " + value.toFixed(2);
+}
+
+function numFromInput(id) {
+  const el = document.getElementById(id);
+  const v = parseFloat(el?.value);
+  return Number.isFinite(v) ? v : 0;
+}
+
+function recalculateQuote() {
+  if (!ratesCache) return;
+
+  // IDs must match your HTML:
+  const gras = numFromInput("gras");
+  const tegels = numFromInput("tegels");
+  const hegging = numFromInput("hegging");
+
+  // JSON keys must match your rates.json:
+  const grasSubtotal = gras * (ratesCache.grass ?? 0);
+  const tegelsSubtotal = tegels * (ratesCache.tiles ?? 0);
+  const heggingSubtotal = hegging * (ratesCache.hedge ?? 0);
+
+  const total = grasSubtotal + tegelsSubtotal + heggingSubtotal;
+
+  document.getElementById("grassSubtotal").textContent = eur(grasSubtotal);
+  document.getElementById("tilesSubtotal").textContent = eur(tegelsSubtotal);
+  document.getElementById("heggingSubtotal").textContent = eur(heggingSubtotal);
+
+  // Only if you have this element in HTML:
+  const totalEl = document.getElementById("total");
+  if (totalEl) totalEl.textContent = eur(total);
+}
+
+// This function currently doesn't work
+async function initQuoteCalculator() {
+  ratesCache = await fetchRates();
+
+  // Listen to YOUR real input IDs:
+  document.getElementById("gras").addEventListener("input", recalculateQuote);
+  document.getElementById("tegels").addEventListener("input", recalculateQuote);
+  document
+    .getElementById("hegging")
+    .addEventListener("input", recalculateQuote);
+
+  recalculateQuote();
+}
+
+document.addEventListener("DOMContentLoaded", initQuoteCalculator);
 
 // Place standard package order
 async function placeStandardOrder() {
@@ -86,6 +120,11 @@ document.getElementById("pakketen").addEventListener("change", function () {
 
 // Place custom order
 async function placeCustomOrder() {
+  if (!ratesCache) {
+    alert("Rates not loaded yet. Please wait.");
+    return;
+  }
+
   const selectedPackage = document.getElementById("pakketen").value;
 
   const gras = parseFloat(document.getElementById("gras").value) || 0;
@@ -102,10 +141,11 @@ async function placeCustomOrder() {
     return;
   }
 
+  // Use JSON ratesCache values here
   const total =
-    gras * priceRates.grass +
-    tegels * priceRates.tiles +
-    hegging * priceRates.hedge;
+    gras * (ratesCache.gras ?? 0) +
+    tegels * (ratesCache.tegels ?? 0) +
+    hegging * (ratesCache.hegging ?? 0);
 
   const customerName = prompt("Voer uw naam in:");
   const address = prompt("Voer uw adres in: Straat, Postcode en Stad");
