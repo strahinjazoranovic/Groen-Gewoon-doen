@@ -101,3 +101,59 @@ function PackageTabs(evt, tabName) {
   document.getElementById(tabName).style.display = "block";
   evt.currentTarget.className += " active";
 }
+
+// Read rate from rates.json
+async function fetchRates() {
+  const response = await fetch("/data/rates/rates.json");
+  if (!response.ok) throw new Error("Failed to fetch rates");
+  return await response.json();
+}
+
+let ratesCache = null;
+
+function eur(value) {
+  return "€ " + value.toFixed(2);
+}
+
+function numFromInput(id) {
+  const el = document.getElementById(id);
+  const v = parseFloat(el?.value);
+  return Number.isFinite(v) ? v : 0;
+}
+
+function recalculateQuote() {
+  if (!ratesCache) return;
+
+  // IDs must match your HTML:
+  const grasM2 = numFromInput("gras");
+  const tegelsM2 = numFromInput("tegels");
+  const heggingM2 = numFromInput("hegging");
+
+  // JSON keys must match your rates.json:
+  const grasSubtotal = grasM2 * (ratesCache.grass_m2 ?? 0);
+  const tegelsSubtotal = tegelsM2 * (ratesCache.tiles_m2 ?? 0);
+  const heggingSubtotal = heggingM2 * (ratesCache.hedge_m2 ?? 0); // change key if needed
+
+  const total = grasSubtotal + tegelsSubtotal + heggingSubtotal;
+
+  document.getElementById("grassSubtotal").textContent = eur(grasSubtotal);
+  document.getElementById("tilesSubtotal").textContent = eur(tegelsSubtotal);
+  document.getElementById("heggingSubtotal").textContent = eur(heggingSubtotal);
+
+  // Only if you have this element in HTML:
+  const totalEl = document.getElementById("total");
+  if (totalEl) totalEl.textContent = eur(total);
+}
+
+async function initQuoteCalculator() {
+  ratesCache = await fetchRates();
+
+  // Listen to YOUR real input IDs:
+  document.getElementById("gras").addEventListener("input", recalculateQuote);
+  document.getElementById("tegels").addEventListener("input", recalculateQuote);
+  document.getElementById("hegging").addEventListener("input", recalculateQuote);
+
+  recalculateQuote();
+}
+
+document.addEventListener("DOMContentLoaded", initQuoteCalculator);
