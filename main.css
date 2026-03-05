@@ -365,9 +365,48 @@ input {
   border: 1px solid #656565;
 }
 
-#option {
+#opties {
   width: 20px;
   height: 20px;
+}
+
+.options-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#card-content .options-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-left: 0;
+  padding: 0 0 4px;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: max-height 320ms ease, opacity 320ms ease, transform 320ms ease;
+  overflow: hidden;
+}
+
+#card-content .options-list.is-visible {
+  max-height: 200px;
+  opacity: 1;
+  transform: translateY(0);
+  padding-top: 8px;
+}
+
+.option-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 12px;
+  max-width: 320px;
+}
+
+.option-row input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
 }
 
 #button,

@@ -34,7 +34,7 @@
       </div>
       <div id="card-offerte">
         <div id="card-title">
-          <h1>Custom Offerte</h1>
+          <h1>Offerte op maat</h1>
         </div>
         <div id="card-content">
           <div>
@@ -70,12 +70,27 @@
               value="0"
             />
           </div>
-
-          <hr />
+          <div class="options-toggle">
+            <input type="checkbox" id="opties" name="opties" value="opties" />
+            <label for="opties">Opties</label>
+          </div>
+          <div id="opties-lijst" class="options-list" aria-hidden="true">
+            <div class="option-row">
+              <span>Bladeren opruimen</span>
+              <input type="checkbox" id="optie-bladeren" name="optie-bladeren" />
+            </div>
+            <div class="option-row">
+              <span>Nepgras aanleggen</span>
+              <input type="checkbox" id="optie-nepgras" name="optie-nepgras" />
+            </div>
+          </div>
+          <hr>
 
           <div>Subtotaal maaien: <span id="grassSubtotal">€ 0.00</span></div>
           <div>Subtotaal tegels: <span id="tilesSubtotal">€ 0.00</span></div>
           <div>Subtotaal hegging: <span id="heggingSubtotal">€ 0.00</span></div>
+          <div>Subtotaal opties: <span id="optiesSubtotaal">€ 0.00</span></div>
+          <div><strong>Totaal: <span id="total">€ 0.00</span></strong></div>
 
           <div id="button-container">
             <!-- <input type="checkbox" id="option" name="option" value="option" onclick="" />

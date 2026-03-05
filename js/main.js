@@ -26,15 +26,26 @@ function recalculateQuote() {
   const tegels = numFromInput("tegels");
   const hegging = numFromInput("hegging");
 
+  // JSON keys must match your rates.json:
   const grasSubtotal = gras * (ratesCache.gras ?? 0);
   const tegelsSubtotal = tegels * (ratesCache.tegels ?? 0);
   const heggingSubtotal = hegging * (ratesCache.hegging ?? 0);
 
-  const total = grasSubtotal + tegelsSubtotal + heggingSubtotal;
+  const optiesIngeschakeld = document.getElementById("opties")?.checked;
+  const bladerenGeselecteerd =
+    document.getElementById("optie-bladeren")?.checked;
+  const nepgrasGeselecteerd = document.getElementById("optie-nepgras")?.checked;
+  const optiesSubtotaal = optiesIngeschakeld
+    ? (bladerenGeselecteerd ? ratesCache.optieBladeren ?? 0 : 0) +
+      (nepgrasGeselecteerd ? ratesCache.optieNepgras ?? 0 : 0)
+    : 0;
+  const total = grasSubtotal + tegelsSubtotal + heggingSubtotal + optiesSubtotaal;
 
   document.getElementById("grassSubtotal").textContent = eur(grasSubtotal);
   document.getElementById("tilesSubtotal").textContent = eur(tegelsSubtotal);
   document.getElementById("heggingSubtotal").textContent = eur(heggingSubtotal);
+  const optiesSubtotaalEl = document.getElementById("optiesSubtotaal");
+  if (optiesSubtotaalEl) optiesSubtotaalEl.textContent = eur(optiesSubtotaal);
 
   const totalEl = document.getElementById("total");
   if (totalEl) totalEl.textContent = eur(total);
@@ -48,6 +59,29 @@ async function initQuoteCalculator() {
   document
     .getElementById("hegging")
     .addEventListener("input", recalculateQuote);
+
+  const optiesSchakelaar = document.getElementById("opties");
+  const optiesLijst = document.getElementById("opties-lijst");
+  const optieBladeren = document.getElementById("optie-bladeren");
+  const optieNepgras = document.getElementById("optie-nepgras");
+
+  if (optiesSchakelaar && optiesLijst) {
+    optiesSchakelaar.addEventListener("change", () => {
+      const isVisible = optiesSchakelaar.checked;
+      optiesLijst.classList.toggle("is-visible", isVisible);
+      optiesLijst.setAttribute("aria-hidden", String(!isVisible));
+
+      if (!isVisible) {
+        if (optieBladeren) optieBladeren.checked = false;
+        if (optieNepgras) optieNepgras.checked = false;
+      }
+
+      recalculateQuote();
+    });
+  }
+
+  if (optieBladeren) optieBladeren.addEventListener("change", recalculateQuote);
+  if (optieNepgras) optieNepgras.addEventListener("change", recalculateQuote);
 
   recalculateQuote();
 }
@@ -105,6 +139,7 @@ orderForm.addEventListener("submit", async (e) => {
     showNotification("Order succesvol geplaatst!", "success");
     orderModal.style.display = "none";
     orderForm.reset();
+    alert("Bestelling geplaatst!");
     displayOrders(".orders-table");
 
     if (orderToPlace.pakket === "Offerte") {
@@ -155,16 +190,38 @@ async function placeCustomOrder() {
     return;
   }
 
+  // Use JSON ratesCache values here
+  const optiesIngeschakeld = document.getElementById("opties")?.checked;
+  const bladerenGeselecteerd =
+    document.getElementById("optie-bladeren")?.checked;
+  const nepgrasGeselecteerd = document.getElementById("optie-nepgras")?.checked;
+  const optiesSubtotaal = optiesIngeschakeld
+    ? (bladerenGeselecteerd ? ratesCache.optieBladeren ?? 0 : 0) +
+      (nepgrasGeselecteerd ? ratesCache.optieNepgras ?? 0 : 0)
+    : 0;
+
   const total =
     gras * (ratesCache.gras ?? 0) +
     tegels * (ratesCache.tegels ?? 0) +
-    hegging * (ratesCache.hegging ?? 0);
+    hegging * (ratesCache.hegging ?? 0) +
+    optiesSubtotaal;
+
+  const gekozenOpties = [];
+  if (optiesIngeschakeld && bladerenGeselecteerd) {
+    gekozenOpties.push("Bladeren opruimen");
+  }
+  if (optiesIngeschakeld && nepgrasGeselecteerd) {
+    gekozenOpties.push("Nepgras aanleggen");
+  }
+  const optiesTekst = gekozenOpties.length
+    ? ` Opties: ${gekozenOpties.join(", ")}`
+    : "";
 
   const orderData = {
     pakket: "Offerte",
     items: [
       {
-        product: `Custom: ${gras}m² gras, ${tegels}m² tegels, ${hegging}m² hegging`,
+        product: `Custom: ${gras}m² gras, ${tegels}m² tegels, ${hegging}m² hegging.${optiesTekst}`,
         quantity: 1,
       },
     ],
