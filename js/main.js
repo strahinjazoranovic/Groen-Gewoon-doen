@@ -26,7 +26,6 @@ function recalculateQuote() {
   const tegels = numFromInput("tegels");
   const hegging = numFromInput("hegging");
 
-  // JSON keys must match your rates.json:
   const grasSubtotal = gras * (ratesCache.gras ?? 0);
   const tegelsSubtotal = tegels * (ratesCache.tegels ?? 0);
   const heggingSubtotal = hegging * (ratesCache.hegging ?? 0);
@@ -35,15 +34,19 @@ function recalculateQuote() {
   const bladerenGeselecteerd =
     document.getElementById("optie-bladeren")?.checked;
   const nepgrasGeselecteerd = document.getElementById("optie-nepgras")?.checked;
+
   const optiesSubtotaal = optiesIngeschakeld
-    ? (bladerenGeselecteerd ? ratesCache.optieBladeren ?? 0 : 0) +
-      (nepgrasGeselecteerd ? ratesCache.optieNepgras ?? 0 : 0)
+    ? (bladerenGeselecteerd ? (ratesCache.optieBladeren ?? 0) : 0) +
+      (nepgrasGeselecteerd ? (ratesCache.optieNepgras ?? 0) : 0)
     : 0;
-  const total = grasSubtotal + tegelsSubtotal + heggingSubtotal + optiesSubtotaal;
+
+  const total =
+    grasSubtotal + tegelsSubtotal + heggingSubtotal + optiesSubtotaal;
 
   document.getElementById("grassSubtotal").textContent = eur(grasSubtotal);
   document.getElementById("tilesSubtotal").textContent = eur(tegelsSubtotal);
   document.getElementById("heggingSubtotal").textContent = eur(heggingSubtotal);
+
   const optiesSubtotaalEl = document.getElementById("optiesSubtotaal");
   if (optiesSubtotaalEl) optiesSubtotaalEl.textContent = eur(optiesSubtotaal);
 
@@ -54,11 +57,9 @@ function recalculateQuote() {
 async function initQuoteCalculator() {
   ratesCache = await fetchRates();
 
-  document.getElementById("gras").addEventListener("input", recalculateQuote);
-  document.getElementById("tegels").addEventListener("input", recalculateQuote);
-  document
-    .getElementById("hegging")
-    .addEventListener("input", recalculateQuote);
+  ["gras", "tegels", "hegging"].forEach((id) => {
+    document.getElementById(id)?.addEventListener("input", recalculateQuote);
+  });
 
   const optiesSchakelaar = document.getElementById("opties");
   const optiesLijst = document.getElementById("opties-lijst");
@@ -106,7 +107,8 @@ function openOrderModal(orderData) {
   orderModal.style.display = "block";
 }
 
-closeModalBtn.addEventListener("click", () => {
+closeModalBtn.addEventListener("click", (e) => {
+  e.preventDefault();
   orderModal.style.display = "none";
 });
 
@@ -138,14 +140,12 @@ orderForm.addEventListener("submit", async (e) => {
   if (result) {
     showNotification("Order succesvol geplaatst!", "success");
     orderModal.style.display = "none";
-    orderForm.reset();
-    alert("Bestelling geplaatst!");
     displayOrders(".orders-table");
 
     if (orderToPlace.pakket === "Offerte") {
-      document.getElementById("gras").value = "";
-      document.getElementById("tegels").value = "";
-      document.getElementById("hegging").value = "";
+      ["gras", "tegels", "hegging"].forEach((id) => {
+        document.getElementById(id).value = "";
+      });
       recalculateQuote();
     }
   } else {
@@ -153,7 +153,8 @@ orderForm.addEventListener("submit", async (e) => {
   }
 });
 
-async function placeStandardOrder() {
+async function placeStandardOrder(e) {
+  e.preventDefault();
   const selectedPackage = document.getElementById("pakketen").value;
 
   let total = 0;
@@ -170,15 +171,17 @@ async function placeStandardOrder() {
   openOrderModal(orderData);
 }
 
-async function placeCustomOrder() {
+async function placeCustomOrder(e) {
+  e.preventDefault();
+
   if (!ratesCache) {
     showNotification("Rates not loaded yet. Please wachten.");
     return;
   }
 
-  const gras = parseFloat(document.getElementById("gras").value) || 0;
-  const tegels = parseFloat(document.getElementById("tegels").value) || 0;
-  const hegging = parseFloat(document.getElementById("hegging").value) || 0;
+  const gras = numFromInput("gras");
+  const tegels = numFromInput("tegels");
+  const hegging = numFromInput("hegging");
 
   if (
     (gras === 0 && tegels === 0 && hegging === 0) ||
@@ -190,14 +193,14 @@ async function placeCustomOrder() {
     return;
   }
 
-  // Use JSON ratesCache values here
   const optiesIngeschakeld = document.getElementById("opties")?.checked;
   const bladerenGeselecteerd =
     document.getElementById("optie-bladeren")?.checked;
   const nepgrasGeselecteerd = document.getElementById("optie-nepgras")?.checked;
+
   const optiesSubtotaal = optiesIngeschakeld
-    ? (bladerenGeselecteerd ? ratesCache.optieBladeren ?? 0 : 0) +
-      (nepgrasGeselecteerd ? ratesCache.optieNepgras ?? 0 : 0)
+    ? (bladerenGeselecteerd ? (ratesCache.optieBladeren ?? 0) : 0) +
+      (nepgrasGeselecteerd ? (ratesCache.optieNepgras ?? 0) : 0)
     : 0;
 
   const total =
@@ -207,12 +210,10 @@ async function placeCustomOrder() {
     optiesSubtotaal;
 
   const gekozenOpties = [];
-  if (optiesIngeschakeld && bladerenGeselecteerd) {
+  if (optiesIngeschakeld && bladerenGeselecteerd)
     gekozenOpties.push("Bladeren opruimen");
-  }
-  if (optiesIngeschakeld && nepgrasGeselecteerd) {
+  if (optiesIngeschakeld && nepgrasGeselecteerd)
     gekozenOpties.push("Nepgras aanleggen");
-  }
   const optiesTekst = gekozenOpties.length
     ? ` Opties: ${gekozenOpties.join(", ")}`
     : "";
@@ -232,7 +233,6 @@ async function placeCustomOrder() {
   openOrderModal(orderData);
 }
 
-// -------------------- Package Selection Logic --------------------
 document.getElementById("pakketen").addEventListener("change", function () {
   if (this.value === "Offerte") {
     document.getElementById("card-offerte").style.display = "block";
@@ -248,11 +248,9 @@ document.getElementById("pakketen").addEventListener("change", function () {
 document.addEventListener("DOMContentLoaded", () => {
   displayOrders(".orders-table");
 
-  const buttons = document.querySelectorAll("#card #button, .btn-dark");
-  buttons.forEach((btn) => {
-    const text = btn.textContent.trim();
-    if (text === "Bereken Offerte") {
-      btn.addEventListener("click", calculateQuote);
-    }
-  });
+  const standardBtn = document.getElementById("button-standard");
+  const customBtn = document.getElementById("button-offerte");
+
+  standardBtn?.addEventListener("click", placeStandardOrder);
+  customBtn?.addEventListener("click", placeCustomOrder);
 });
