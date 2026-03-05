@@ -26,6 +26,10 @@ node -v
 npm -v
 ```
 
+Live server extension:
+
+https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer
+
 ## 📦 Install the required dependencies:
 
 To install Node, run:
@@ -42,6 +46,8 @@ To start the Node server, run:
 node server start
 ```
 
+And then click on the button "Go Live" in the bottom right
+
 ### ⚠️ Keep the terminal window open while the server is running.
 
 ## 📌 Notes
@@ -51,3 +57,5 @@ node server start
 2. If the server does not start, double-check the install steps.
 
 3. The server must remain running in the terminal for the application to work correctly.
+
+4. Localhost:3000 will not work with fdsaf you need to be at http://127.0.0.1:5500/

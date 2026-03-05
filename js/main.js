@@ -1,7 +1,9 @@
-// Read rate from rates.json
 async function fetchRates() {
   const response = await fetch("/data/rates/rates.json");
-  if (!response.ok) throw new Error("Failed to fetch rates");
+  if (!response.ok) {
+    showNotification("Failed to fetch rates");
+    return {};
+  }
   return await response.json();
 }
 
@@ -20,15 +22,13 @@ function numFromInput(id) {
 function recalculateQuote() {
   if (!ratesCache) return;
 
-  // IDs must match your HTML:
   const gras = numFromInput("gras");
   const tegels = numFromInput("tegels");
   const hegging = numFromInput("hegging");
 
-  // JSON keys must match your rates.json:
-  const grasSubtotal = gras * (ratesCache.grass ?? 0);
-  const tegelsSubtotal = tegels * (ratesCache.tiles ?? 0);
-  const heggingSubtotal = hegging * (ratesCache.hedge ?? 0);
+  const grasSubtotal = gras * (ratesCache.gras ?? 0);
+  const tegelsSubtotal = tegels * (ratesCache.tegels ?? 0);
+  const heggingSubtotal = hegging * (ratesCache.hegging ?? 0);
 
   const total = grasSubtotal + tegelsSubtotal + heggingSubtotal;
 
@@ -36,16 +36,13 @@ function recalculateQuote() {
   document.getElementById("tilesSubtotal").textContent = eur(tegelsSubtotal);
   document.getElementById("heggingSubtotal").textContent = eur(heggingSubtotal);
 
-  // Only if you have this element in HTML:
   const totalEl = document.getElementById("total");
   if (totalEl) totalEl.textContent = eur(total);
 }
 
-// This function currently doesn't work
 async function initQuoteCalculator() {
   ratesCache = await fetchRates();
 
-  // Listen to YOUR real input IDs:
   document.getElementById("gras").addEventListener("input", recalculateQuote);
   document.getElementById("tegels").addEventListener("input", recalculateQuote);
   document
@@ -57,37 +54,117 @@ async function initQuoteCalculator() {
 
 document.addEventListener("DOMContentLoaded", initQuoteCalculator);
 
-// Place standard package order
+function showNotification(message, type = "error") {
+  const notif = document.getElementById("notification");
+  notif.textContent = message;
+  notif.style.backgroundColor = type === "success" ? "#4CAF50" : "#f44336";
+  notif.classList.add("show");
+  setTimeout(() => notif.classList.remove("show"), 3500);
+}
+
+const orderModal = document.getElementById("orderModal");
+const closeModalBtn = document.querySelector(".close-button");
+const orderForm = document.getElementById("orderForm");
+let currentOrderData = null;
+
+function openOrderModal(orderData) {
+  currentOrderData = orderData;
+  orderModal.style.display = "block";
+}
+
+closeModalBtn.addEventListener("click", () => {
+  orderModal.style.display = "none";
+});
+
+window.addEventListener("click", (e) => {
+  if (e.target === orderModal) orderModal.style.display = "none";
+});
+
+orderForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const customerName = document.getElementById("customerName").value.trim();
+  const address = document.getElementById("address").value.trim();
+  const deliveryDateTime = document.getElementById("deliveryDateTime").value;
+
+  if (!customerName || !address || !deliveryDateTime) {
+    showNotification("Alle velden zijn verplicht!");
+    return;
+  }
+
+  const orderToPlace = {
+    ...currentOrderData,
+    customer: customerName,
+    address: address,
+    delivery: deliveryDateTime,
+  };
+
+  const result = await createOrder(orderToPlace);
+
+  if (result) {
+    showNotification("Order succesvol geplaatst!", "success");
+    orderModal.style.display = "none";
+    orderForm.reset();
+    displayOrders(".orders-table");
+
+    if (orderToPlace.pakket === "Offerte") {
+      document.getElementById("gras").value = "";
+      document.getElementById("tegels").value = "";
+      document.getElementById("hegging").value = "";
+      recalculateQuote();
+    }
+  } else {
+    showNotification("Order plaatsen mislukt!");
+  }
+});
+
 async function placeStandardOrder() {
   const selectedPackage = document.getElementById("pakketen").value;
 
   let total = 0;
+  if (selectedPackage === "Standard") total = 39.99;
+  else if (selectedPackage === "Premium") total = 49.99;
 
-  if (selectedPackage === "Standard") {
-    total = 39.99;
-  } else if (selectedPackage === "Premium") {
-    total = 49.99;
-  }
+  const orderData = {
+    pakket: selectedPackage,
+    items: [{ product: `Pakket: ${selectedPackage}`, quantity: 1 }],
+    total: total.toFixed(2),
+    status: "In behandeling",
+  };
 
-  const customerName = prompt("Voer uw naam in:");
-  const address = prompt("Voer uw adres in: Straat, Postcode en Stad");
-  const deliveryDateTime = prompt(
-    "Voer de gewenste leverdatum in (bijv. 26-02-2026):",
-  );
+  openOrderModal(orderData);
+}
 
-  if (!customerName || !address || !deliveryDateTime) {
-    alert("Naam, adres en leverdatum/tijd zijn verplicht");
+async function placeCustomOrder() {
+  if (!ratesCache) {
+    showNotification("Rates not loaded yet. Please wachten.");
     return;
   }
 
-  const newStandardOrder = {
-    customer: customerName,
-    address: address,
-    delivery: deliveryDateTime,
-    pakket: selectedPackage,
+  const gras = parseFloat(document.getElementById("gras").value) || 0;
+  const tegels = parseFloat(document.getElementById("tegels").value) || 0;
+  const hegging = parseFloat(document.getElementById("hegging").value) || 0;
+
+  if (
+    (gras === 0 && tegels === 0 && hegging === 0) ||
+    gras < 0 ||
+    tegels < 0 ||
+    hegging < 0
+  ) {
+    showNotification("Vul alstublieft een geldig aantal in");
+    return;
+  }
+
+  const total =
+    gras * (ratesCache.gras ?? 0) +
+    tegels * (ratesCache.tegels ?? 0) +
+    hegging * (ratesCache.hegging ?? 0);
+
+  const orderData = {
+    pakket: "Offerte",
     items: [
       {
-        product: `Pakket: ${selectedPackage}`,
+        product: `Custom: ${gras}m² gras, ${tegels}m² tegels, ${hegging}m² hegging`,
         quantity: 1,
       },
     ],
@@ -95,17 +172,10 @@ async function placeStandardOrder() {
     status: "In behandeling",
   };
 
-  const result = await createOrder(newStandardOrder);
-
-  if (result) {
-    alert("Order placed successfully!");
-    displayOrders(".orders-table");
-  } else {
-    alert("Failed to place order");
-  }
+  openOrderModal(orderData);
 }
 
-// Listen for package selection changes and show offerte card if "offerte" is selected
+// -------------------- Package Selection Logic --------------------
 document.getElementById("pakketen").addEventListener("change", function () {
   if (this.value === "Offerte") {
     document.getElementById("card-offerte").style.display = "block";
@@ -118,84 +188,13 @@ document.getElementById("pakketen").addEventListener("change", function () {
   }
 });
 
-// Place custom order
-async function placeCustomOrder() {
-  if (!ratesCache) {
-    alert("Rates not loaded yet. Please wait.");
-    return;
-  }
-
-  const selectedPackage = document.getElementById("pakketen").value;
-
-  const gras = parseFloat(document.getElementById("gras").value) || 0;
-  const tegels = parseFloat(document.getElementById("tegels").value) || 0;
-  const hegging = parseFloat(document.getElementById("hegging").value) || 0;
-
-  if (
-    (gras === 0 && tegels === 0 && hegging === 0) ||
-    gras < 0 ||
-    tegels < 0 ||
-    hegging < 0
-  ) {
-    alert("Vul alstublieft een geldig aantal in");
-    return;
-  }
-
-  // Use JSON ratesCache values here
-  const total =
-    gras * (ratesCache.gras ?? 0) +
-    tegels * (ratesCache.tegels ?? 0) +
-    hegging * (ratesCache.hegging ?? 0);
-
-  const customerName = prompt("Voer uw naam in:");
-  const address = prompt("Voer uw adres in: Straat, Postcode en Stad");
-  const deliveryDateTime = prompt(
-    "Voer de gewenste leverdatum in (bijv. 26-02-2026):",
-  );
-
-  if (!customerName || !address || !deliveryDateTime) {
-    alert("Naam, adres en leverdatum/tijd zijn verplicht");
-    return;
-  }
-
-  const newCustomOrder = {
-    customer: customerName,
-    address: address,
-    delivery: deliveryDateTime,
-    pakket: selectedPackage,
-    items: [
-      {
-        product: `Custom: ${gras}m² gras, ${tegels}m² tegels, ${hegging}m² hegging`,
-        quantity: 1,
-      },
-    ],
-    total: total.toFixed(2),
-    status: "In behandeling",
-  };
-
-  const result = await createOrder(newCustomOrder);
-  if (result) {
-    alert("Order placed successfully!");
-    document.getElementById("gras").value = "";
-    document.getElementById("tegels").value = "";
-    document.getElementById("hegging").value = "";
-    displayOrders(".orders-table");
-  } else {
-    alert("Failed to place order");
-  }
-}
-
-// Load orders when page loads
 document.addEventListener("DOMContentLoaded", () => {
   displayOrders(".orders-table");
 
-  // Add event listeners to order buttons
   const buttons = document.querySelectorAll("#card #button, .btn-dark");
   buttons.forEach((btn) => {
     const text = btn.textContent.trim();
-    if (text === "Bestel") {
-      // btn.addEventListener("click", orderStandardPackage);
-    } else if (text === "Bereken Offerte") {
+    if (text === "Bereken Offerte") {
       btn.addEventListener("click", calculateQuote);
     }
   });
