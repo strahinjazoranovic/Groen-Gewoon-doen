@@ -58,4 +58,4 @@ And then click on the button "Go Live" in the bottom right
 
 3. The server must remain running in the terminal for the application to work correctly.
 
-4. Localhost:3000 will not work with fdsaf you need to be at http://127.0.0.1:5500/
+4. Localhost:3000 will not work with node you need to be at http://127.0.0.1:5500/
