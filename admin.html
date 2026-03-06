@@ -10,14 +10,20 @@
     <link rel="stylesheet" href="main.css" />
   </head>
   <body>
-    <h1 id="title2">Beheerszijde (Admin)</h1>
-    <div class="main">
-      <div class="admin-header">
-        <h2>Admin — Groen & Gewoon doen</h2>
-        <button class="btn btn-gradient" type="button">Logout</button>
-      </div>
+    <div id="header">
+      <img src="assets/logo.png" alt="logo" style="width: 80px" />
 
-      <div class="tab">
+        <h2> Admin — Groen & Gewoon doen</h2>
+        <button class="btn btn-gradient" type="button">Logout</button>
+    </div>
+  
+    
+
+     
+
+      <div id="orders" class="tabcontent">
+        <h3>Orders overzicht</h3>
+         <div class="tab">
         <button
           class="tablinks"
           onclick="Tabs(event, 'orders')"
@@ -32,9 +38,6 @@
           Tarieven
         </button>
       </div>
-
-      <div id="orders" class="tabcontent">
-        <h3>Orders overzicht</h3>
         <div class="orders-scroll">
           <table class="orders-table">
             <thead>
@@ -77,8 +80,24 @@
 
       <div id="pakketten" class="tabcontent">
         <h3>Pakketten</h3>
+         <div class="tab">
+        <button
+          class="tablinks"
+          onclick="Tabs(event, 'orders')"
+          id="defaultOpen"
+        >
+          Orders
+        </button>
+        <button class="tablinks" onclick="Tabs(event, 'pakketten')">
+          Pakketten
+        </button>
+        <button class="tablinks" onclick="Tabs(event, 'tarieven')">
+          Tarieven
+        </button>
+      </div>
         <div class="packages-panel">
           <div class="packages-header">Pakketten Beheren</div>
+          
           <div class="packages-subtab">
             <button
               class="packages-subtablinks"
@@ -162,6 +181,21 @@
 
       <div id="tarieven" class="tabcontent">
         <h3>Tarieven</h3>
+        <div class="tab">
+        <button
+          class="tablinks"
+          onclick="Tabs(event, 'orders')"
+          id="defaultOpen"
+        >
+          Orders
+        </button>
+        <button class="tablinks" onclick="Tabs(event, 'pakketten')">
+          Pakketten
+        </button>
+        <button class="tablinks" onclick="Tabs(event, 'tarieven')">
+          Tarieven
+        </button>
+      </div>
         <div class="packages-panel">
           <div class="packages-header">Tarieven Beheren</div>
           <div class="packages-form">
@@ -178,6 +212,7 @@
         </div>
       </div>
     </div>
+    
 
     <script src="js/functions.js"></script>
     <script src="js/admin.js"></script>
