@@ -101,7 +101,6 @@ h6 {
   margin-top: 16px;
   border-bottom: 1px solid #e0e0e0;
   padding-bottom: 8px;
-  
 }
 
 .tablinks {
@@ -114,7 +113,6 @@ h6 {
   font-family: "Inter", sans-serif;
   font-weight: 600;
   padding: 10px 14px;
-  
 }
 
 .packages-subtab {
@@ -155,19 +153,11 @@ h6 {
 
 .tabcontent {
   display: none;
-  padding: 100px;
-}
-#orders {
-    background-color: #f4f6f8;
+  padding-top: 100px;
+  padding-right: 200px;
+  padding-left: 200px;
 }
 
-
-#orders h3 {
- border-bottom: 2px solid #01be11;
-  font-size: 18px;
-  padding: 16px;
-  
-}
 #card-content > div {
   display: flex;
   align-items: center;
@@ -281,7 +271,7 @@ h6 {
 }
 
 .orders-table {
-  width: 80%;
+  width: 100%;
   border-collapse: collapse;
   margin-top: 8px;
   font-size: 14px;
@@ -292,7 +282,6 @@ h6 {
   overflow: auto;
   border: 1px solid #e0e0e0;
   border-radius: 6px;
-  display: flex;
   align-items: center;
   gap: 12px;
   margin-bottom: 12px;
@@ -315,6 +304,15 @@ h6 {
 #header {
   color: rgb(0, 0, 0);
   display: flex;
+  padding: 36px;
+  border-bottom: 1px solid #01be11;
+  box-shadow: 0 12px 12px 0px rgba(0, 0, 0, 0.1);
+}
+
+#header2 {
+  color: rgb(0, 0, 0);
+  display: flex;
+  gap: 12px;
   padding: 36px;
   border-bottom: 1px solid #01be11;
   box-shadow: 0 12px 12px 0px rgba(0, 0, 0, 0.1);
@@ -414,7 +412,10 @@ input {
   max-height: 0;
   opacity: 0;
   transform: translateY(-6px);
-  transition: max-height 320ms ease, opacity 320ms ease, transform 320ms ease;
+  transition:
+    max-height 320ms ease,
+    opacity 320ms ease,
+    transform 320ms ease;
   overflow: hidden;
 }
 
