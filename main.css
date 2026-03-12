@@ -20,7 +20,8 @@ h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+p {
   margin: 0;
   padding: 0;
   font-weight: 500;
@@ -58,25 +59,16 @@ h6 {
   padding: 8px 14px;
   text-align: center;
   white-space: nowrap;
-}
-
-.btn-gradient {
-  background-image: linear-gradient(-180deg, #00d775, #00bd68);
-  border-radius: 5px;
-  padding: 10px 20px;
-}
-
-.btn-gradient:hover,
-.modal-content button:hover {
-  background: #00bd68;
+  transition: all 0.3s ease-in;
 }
 
 .btn-green {
   background: #8ee58a;
 }
 
-.btn-green:hover {
-  background: #7adf76;
+.btn-green2 {
+  margin-top: 12px;
+  background: #8ee58a;
 }
 
 .btn-muted {
@@ -95,12 +87,21 @@ h6 {
   color: #7c2f2f;
 }
 
+.btn-danger2 {
+  margin-top: 12px;
+  background: #e2b6b6;
+  border: 1px solid #d7a1a1;
+  color: #7c2f2f;
+}
+
 .tab {
   display: flex;
   gap: 8px;
-  margin-top: 16px;
+  margin-top: 24px;
   border-bottom: 1px solid #e0e0e0;
   padding-bottom: 8px;
+  padding-left: 125px;
+  padding-right: 125px;
 }
 
 .tablinks {
@@ -153,9 +154,9 @@ h6 {
 
 .tabcontent {
   display: none;
-  padding-top: 100px;
-  padding-right: 200px;
-  padding-left: 200px;
+  padding-top: 20px;
+  padding-left: 125px;
+  padding-right: 125px;
 }
 
 #card-content > div {
@@ -441,7 +442,7 @@ input {
 
 #button,
 #button-standard {
-  background-image: linear-gradient(-180deg, #00d775, #00bd68);
+  background: #8ee58a;
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.1) 0 6px 8px;
   color: #ffffff;
@@ -474,7 +475,8 @@ input {
 
 #button,
 #button-standard,
-#button-offerte:hover {
+#button-offerte:hover,
+.btn:hover {
   transform: translateY(-2px);
 }
 
@@ -533,23 +535,6 @@ input {
   margin-top: 10px;
   margin-bottom: 4px;
   font-weight: bold;
-}
-
-.modal-content button {
-  border: 0;
-  border-radius: 6px;
-  color: #ffffff;
-  cursor: pointer;
-  display: inline-block;
-  font-family: "Inter", sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 1.2;
-  margin-top: 16px;
-  padding: 8px 14px;
-  text-align: center;
-  white-space: nowrap;
-  background-image: linear-gradient(-180deg, #00d775, #00bd68);
 }
 
 #orderForm {

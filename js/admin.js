@@ -1,3 +1,95 @@
+let orderModal = null;
+let closeModalBtn = null;
+let orderForm = null;
+let currentOrderData = null;
+
+document.addEventListener("DOMContentLoaded", () => {
+  orderModal = document.getElementById("orderModal");
+  closeModalBtn = orderModal.querySelector(".close-button");
+  orderForm = document.getElementById("orderForm");
+
+  // ---- Modal Events ----
+  closeModalBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    orderModal.style.display = "none";
+  });
+
+  window.addEventListener("click", (e) => {
+    if (e.target === orderModal) orderModal.style.display = "none";
+  });
+
+  // ---- Order Form Submit ----
+  if (orderForm) {
+    orderForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const customerName = document.getElementById("customerName").value.trim();
+      const address = document.getElementById("address").value.trim();
+      const deliveryDateTime =
+        document.getElementById("deliveryDateTime").value;
+
+      if (!customerName || !address || !deliveryDateTime) {
+        alert("Alle velden zijn verplicht!");
+        return;
+      }
+
+      const updatedOrder = {
+        ...currentOrderData,
+        customer: customerName,
+        address: address,
+        delivery: deliveryDateTime,
+      };
+
+      const result = await updateOrder(currentOrderData.id, updatedOrder);
+      if (result) {
+        displayOrdersAdmin(".orders-table");
+        orderModal.style.display = "none";
+      } else {
+        alert("Order update mislukt!");
+      }
+    });
+  }
+
+  // ---- Load initial data ----
+  displayOrdersAdmin(".orders-table");
+  displayPackages();
+
+  // ---- Package Form Button ----
+  const addPackageBtn = document.querySelector(
+    "#packages-nieuw .packages-form button",
+  );
+  if (addPackageBtn) {
+    addPackageBtn.addEventListener("click", async () => {
+      const name = document.getElementById("package-name").value.trim();
+      const price = document.getElementById("package-price").value.trim();
+      const packageId = document.getElementById("package-id").value;
+
+      if (!name || !price) {
+        alert("Vul alstublieft naam en prijs in");
+        return;
+      }
+
+      if (packageId) {
+        await updatePackage(packageId, { name, price });
+      } else {
+        await createPackage({ name, price });
+      }
+
+      clearPackageForm();
+      displayPackages();
+    });
+  }
+});
+
+function openOrderModal(orderData) {
+  currentOrderData = orderData;
+
+  document.getElementById("customerName").value = orderData.customer || "";
+  document.getElementById("address").value = orderData.address || "";
+  document.getElementById("deliveryDateTime").value = orderData.delivery || "";
+
+  orderModal.style.display = "block";
+}
+
 function Tabs(evt, cityName) {
   var i, tabcontent, tablinks;
 
@@ -24,13 +116,41 @@ function Tabs(evt, cityName) {
 
 // Update order status
 async function updateOrderStatus(orderId) {
-  const statuses = ["In behandeling", "Verzonden", "Geleverd"];
-  const status = prompt(`Update order status:\n${statuses.join("\n")}`);
-  if (status && statuses.includes(status)) {
-    await updateOrder(orderId, { status });
-    displayOrdersAdmin(".orders-table");
-  }
+  const orders = await fetchOrders();
+  const order = orders.find((o) => o.id === orderId);
+  if (!order) return;
+
+  openOrderModal(order);
 }
+
+orderForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const customerName = document.getElementById("customerName").value.trim();
+  const address = document.getElementById("address").value.trim();
+  const deliveryDateTime = document.getElementById("deliveryDateTime").value;
+
+  if (!customerName || !address || !deliveryDateTime) {
+    alert("Alle velden zijn verplicht!"); // you can also replace this with your notification div
+    return;
+  }
+
+  const updatedOrder = {
+    ...currentOrderData,
+    customer: customerName,
+    address: address,
+    delivery: deliveryDateTime,
+  };
+
+  const result = await updateOrder(currentOrderData.id, updatedOrder);
+
+  if (result) {
+    displayOrdersAdmin(".orders-table");
+    orderModal.style.display = "none";
+  } else {
+    alert("Order update mislukt!"); // optional notification
+  }
+});
 
 // Edit package
 async function editPackage(packageId) {

@@ -12,202 +12,134 @@
   <body>
     <div id="header2">
       <img src="assets/logo.png" alt="logo" style="width: 80px" />
-
-        <h2 id="title"> Admin — Groen & Gewoon doen</h2>
-        <button class="btn btn-gradient" type="button">Logout</button>
+      <h2 id="title">Admin — Groen & Gewoon doen</h2>
+      <button class="btn btn-green" type="button">Logout</button>
     </div>
-      <div id="orders" class="tabcontent">
-        <h3>Orders overzicht</h3>
-         <div class="tab">
-        <button
-          class="tablinks"
-          onclick="Tabs(event, 'orders')"
-          id="defaultOpen"
-        >
-          Orders
-        </button>
-        <button class="tablinks" onclick="Tabs(event, 'pakketten')">
-          Pakketten
-        </button>
-        <button class="tablinks" onclick="Tabs(event, 'tarieven')">
-          Tarieven
-        </button>
-      </div>
-        <div class="orders-scroll">
-          <table class="orders-table">
-            <thead>
-              <tr>
-                <th>Order ID</th>
-                <th>Naam</th>
-                <th>Pakkettype</th>
-                <th>Address</th>
-                <th>Leverdatum</th>
-                <th>Prijs</th>
-                <th>Status</th>
-                <th>Acties</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>#001</td>
-                <td>Placeholder1</td>
-                <td>02-09-2008</td>
-                <td>Basic</td>
-                <td>In behandeling</td>
-                <td>
-                  <button class="btn btn-green" type="button">Bekijken</button>
-                </td>
-              </tr>
-              <tr>
-                <td>#002</td>
-                <td>Placeholder2</td>
-                <td>02-10-2008</td>
-                <td>Premium</td>
-                <td>Verzonden</td>
-                <td>
-                  <button class="btn btn-green" type="button">Bekijken</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
 
-      <div id="pakketten" class="tabcontent">
-        <h3>Pakketten</h3>
-         <div class="tab">
-        <button
-          class="tablinks"
-          onclick="Tabs(event, 'orders')"
-          id="defaultOpen"
-        >
-          Orders
-        </button>
-        <button class="tablinks" onclick="Tabs(event, 'pakketten')">
-          Pakketten
-        </button>
-        <button class="tablinks" onclick="Tabs(event, 'tarieven')">
-          Tarieven
-        </button>
-      </div>
-        <div class="packages-panel">
-          <div class="packages-header">Pakketten Beheren</div>
-          
-          <div class="packages-subtab">
-            <button
-              class="packages-subtablinks"
-              onclick="PackageTabs(event, 'packages-bewerk')"
-              data-tab="packages-bewerk"
-              type="button"
-            >
-              Bewerk
-            </button>
-            <button
-              class="packages-subtablinks"
-              onclick="PackageTabs(event, 'packages-nieuw')"
-              data-tab="packages-nieuw"
-              type="button"
-            >
-              Nieuw Pakket
-            </button>
-          </div>
+    <div class="tab">
+      <button class="tablinks" onclick="Tabs(event, 'orders')" id="defaultOpen">
+        Orders
+      </button>
+      <button class="tablinks" onclick="Tabs(event, 'pakketten')">
+        Pakketten
+      </button>
+      <button class="tablinks" onclick="Tabs(event, 'tarieven')">
+        Tarieven
+      </button>
+    </div>
 
-          <div
-            id="packages-nieuw"
-            class="packages-subtabcontent"
-            style="display: block"
+    <div id="orders" class="tabcontent">
+      <h3>Orders overzicht</h3>
+      <div class="orders-scroll">
+        <table class="orders-table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Naam</th>
+              <th>Pakkettype</th>
+              <th>Address</th>
+              <th>Leverdatum</th>
+              <th>Prijs</th>
+              <th>Status</th>
+              <th>Acties</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="pakketten" class="tabcontent">
+      <h3>Pakketten</h3>
+      <div class="packages-panel">
+        <div class="packages-header">Pakketten Beheren</div>
+
+        <div class="packages-subtab">
+          <button
+            class="packages-subtablinks"
+            onclick="PackageTabs(event, 'packages-bewerk')"
+            type="button"
           >
-            <div class="packages-form">
-              <div class="packages-form-title">Nieuw Pakket</div>
-              <label class="packages-label" for="package-name">Naam</label>
-              <input id="package-name" class="packages-input" type="text" />
-              <label class="packages-label" for="package-price">Prijs</label>
-              <input id="package-id" type="hidden" />
-              <input id="package-price" class="packages-input" type="text" />
-              <button class="btn btn-dark" type="button">Toevoegen</button>
-            </div>
-          </div>
+            Bewerk
+          </button>
+          <button
+            class="packages-subtablinks"
+            onclick="PackageTabs(event, 'packages-nieuw')"
+            type="button"
+          >
+            Nieuw Pakket
+          </button>
+        </div>
 
-          <div id="packages-bewerk" class="packages-subtabcontent">
-            <div class="packages-table">
-              <div class="packages-row packages-head">
-                <div>Naam</div>
-                <div>Beschrijving</div>
-                <div>Prijs</div>
-                <div>Acties</div>
-              </div>
-              <div class="packages-row">
-                <div>Basis</div>
-                <div>Onderhoud klein gazon</div>
-                <div>€ 49,00</div>
-                <div class="packages-actions">
-                  <button class="btn btn-muted" type="button">Bewerk</button>
-                  <button class="btn btn-danger" type="button">
-                    Verwijder
-                  </button>
-                </div>
-              </div>
-              <div class="packages-row">
-                <div>Standaard</div>
-                <div>Gazon + hagen snoeien</div>
-                <div>€ 79,00</div>
-                <div class="packages-actions">
-                  <button class="btn btn-muted" type="button">Bewerk</button>
-                  <button class="btn btn-danger" type="button">
-                    Verwijder
-                  </button>
-                </div>
-              </div>
-              <div class="packages-row">
-                <div>Premium</div>
-                <div>Volledig tuinonderhoud</div>
-                <div>€ 129,00</div>
-                <div class="packages-actions">
-                  <button class="btn btn-muted" type="button">Bewerk</button>
-                  <button class="btn btn-danger" type="button">
-                    Verwijder
-                  </button>
-                </div>
-              </div>
-            </div>
+        <div
+          id="packages-nieuw"
+          class="packages-subtabcontent"
+          style="display: block"
+        >
+          <div class="packages-form">
+            <div class="packages-form-title">Nieuw Pakket</div>
+            <label for="package-name">Naam</label>
+            <input id="package-name" class="packages-input" type="text" />
+            <label for="package-price">Prijs</label>
+            <input id="package-id" type="hidden" />
+            <input id="package-price" class="packages-input" type="text" />
+            <button class="btn btn-dark" type="button">Toevoegen</button>
           </div>
         </div>
-      </div>
 
-      <div id="tarieven" class="tabcontent">
-        <h3>Tarieven</h3>
-        <div class="tab">
-        <button
-          class="tablinks"
-          onclick="Tabs(event, 'orders')"
-          id="defaultOpen"
-        >
-          Orders
-        </button>
-        <button class="tablinks" onclick="Tabs(event, 'pakketten')">
-          Pakketten
-        </button>
-        <button class="tablinks" onclick="Tabs(event, 'tarieven')">
-          Tarieven
-        </button>
+        <div id="packages-bewerk" class="packages-subtabcontent">
+          <div class="packages-table"></div>
+        </div>
       </div>
-        <div class="packages-panel">
-          <div class="packages-header">Tarieven Beheren</div>
-          <div class="packages-form">
-            <label class="packages-label" for="rate-grass"
-              >Prijs per m² Gras</label
-            >
-            <input id="rate-grass" class="packages-input" type="text" />
-            <label class="packages-label" for="rate-tiles"
-              >Prijs per m² Tegels</label
-            >
-            <input id="rate-tiles" class="packages-input" type="text" />
-            <button class="btn btn-dark" type="button">Opslaan</button>
+    </div>
+
+    <div id="tarieven" class="tabcontent">
+      <h3>Tarieven</h3>
+      <div class="packages-panel">
+        <div class="packages-header">Tarieven Beheren</div>
+        <div class="packages-form">
+          <label for="rate-grass">Prijs per m² Gras</label>
+          <input id="rate-grass" class="packages-input" type="text" />
+          <label for="rate-tiles">Prijs per m² Tegels</label>
+          <input id="rate-tiles" class="packages-input" type="text" />
+          <button class="btn btn-dark" type="button">Opslaan</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="orderModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Vul uw gegevens in</h2>
+          <span class="close-button">&times;</span>
+        </div>
+        <form id="orderForm">
+          <label for="customerName">Naam:</label>
+          <input type="text" id="customerName" required />
+          <label for="address">Adres (Straat, Postcode, Stad):</label>
+          <input type="text" id="address" required />
+          <label for="deliveryDateTime">Leverdatum:</label>
+          <input type="date" id="deliveryDateTime" required />
+          <button type="submit" class="btn btn-green2">Update order</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="deleteModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Weet je het zeker?</h2>
+          <span class="close-button" id="deleteModalClose">&times;</span>
+        </div>
+        <div class="modal-body">
+          <p>Wil je deze order echt verwijderen?</p>
+          <div class="modal-actions">
+            <button id="confirmDelete" class="btn btn-green2">Ja</button>
+            <button id="cancelDelete" class="btn btn-danger2">Nee</button>
           </div>
         </div>
       </div>
     </div>
-    
 
     <script src="js/functions.js"></script>
     <script src="js/admin.js"></script>

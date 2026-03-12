@@ -68,7 +68,7 @@ async function displayOrdersAdmin(tableSelector) {
       <td>€${order.total}</td>
       <td>${order.status}</td>
       <td>
-        <button class="btn btn-green" type="button" onclick="updateOrderStatus(${order.id})">Update</button>
+        <button class="btn btn-green" type="button" onclick="updateOrderStatus(${order.id})">Update</button>  
         <button class="btn btn-danger" type="button" onclick="deleteOrderAdmin(${order.id})">Verwijder</button>
       </td>   
     `;
@@ -147,14 +147,35 @@ async function deleteOrder(orderId) {
     return null;
   }
 }
+let orderToDelete = null;
 
-// Delete order from admin/user panel with confirmation
 async function deleteOrderAdmin(orderId) {
-  if (confirm("Are you sure you want to delete this order?")) {
-    await deleteOrder(orderId);
-    displayOrders(".orders-table");
-  }
+  orderToDelete = orderId;
+  const modal = document.getElementById("deleteModal");
+  modal.style.display = "block";
 }
+
+// Ja button
+document.getElementById("confirmDelete").addEventListener("click", async () => {
+  if (orderToDelete) {
+    await deleteOrder(orderToDelete);
+    displayOrders(".orders-table");
+    orderToDelete = null;
+  }
+  document.getElementById("deleteModal").style.display = "none";
+});
+
+// Nee button
+document.getElementById("cancelDelete").addEventListener("click", () => {
+  orderToDelete = null;
+  document.getElementById("deleteModal").style.display = "none";
+});
+
+// Close modal when clicking X
+document.getElementById("deleteModalClose").addEventListener("click", () => {
+  orderToDelete = null;
+  document.getElementById("deleteModal").style.display = "none";
+});
 
 // CREATE: Add new package
 async function createPackage(packageData) {
