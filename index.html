@@ -28,6 +28,7 @@
           <option value="Premium">Premium</option>
           <option value="Offerte">Custom offerte</option>
         </select>
+        <div>Subtotaal: <span id="package-price">€ 0.00</span></div>
         <button id="button-standard" onclick="placeStandardOrder()">
           Bestel pakket
         </button>
@@ -44,6 +45,7 @@
               id="gras"
               name="gras"
               min="0"
+              max="500"
               step="0.01"
               value="0"
             />
@@ -55,6 +57,7 @@
               id="tegels"
               name="tegels"
               min="0"
+              max="300"
               step="0.01"
               value="0"
             />
@@ -66,6 +69,7 @@
               id="hegging"
               name="hegging"
               min="0"
+              max="100"
               step="0.01"
               value="0"
             />
@@ -145,6 +149,7 @@
               <th>Leverdatum</th>
               <th>Prijs</th>
               <th>Status</th>
+              <th>Actos</th>
             </tr>
           </thead>
           <tbody>
@@ -154,6 +159,7 @@
               <td data-label="Offerte">Standaard</td>
               <td data-label="Status">In behandeling</td>
               <td data-label="Datum">10-10-2010</td>
+              <td data-label="Actie"><button class="btn btn-danger" type="button">Annuleer</button></td>
             </tr>
             <tr>
               <td data-label="Order ID">#002</td>
@@ -161,6 +167,7 @@
               <td data-label="Offerte">Premium</td>
               <td data-label="Status">Verzonden</td>
               <td data-label="Datum">10-10-2010</td>
+              <td data-label="Actie"><button class="btn btn-danger" type="button">Annuleer</button></td>
             </tr>
           </tbody>
         </table>

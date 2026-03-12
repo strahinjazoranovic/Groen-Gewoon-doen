@@ -8,6 +8,11 @@ async function fetchRates() {
 }
 
 let ratesCache = null;
+const STANDARD_PRICE = 39.99;
+const PREMIUM_PRICE = 59.99;
+const MAX_GRAS = 500;
+const MAX_TEGELS = 300;
+const MAX_HEGGING = 100;
 
 function eur(value) {
   return "€ " + value.toFixed(2);
@@ -19,12 +24,33 @@ function numFromInput(id) {
   return Number.isFinite(v) ? v : 0;
 }
 
+function readQuantity(id, max) {
+  const el = document.getElementById(id);
+  const raw = parseFloat(el?.value);
+  let value = Number.isFinite(raw) ? raw : 0;
+  let exceeded = false;
+
+  if (value < 0) {
+    value = 0;
+    exceeded = true;
+  }
+
+  if (value > max) {
+    value = max;
+    exceeded = true;
+  }
+
+  if (el) el.value = value;
+
+  return { value, exceeded };
+}
+
 function recalculateQuote() {
   if (!ratesCache) return;
 
-  const gras = numFromInput("gras");
-  const tegels = numFromInput("tegels");
-  const hegging = numFromInput("hegging");
+  const gras = readQuantity("gras", MAX_GRAS).value;
+  const tegels = readQuantity("tegels", MAX_TEGELS).value;
+  const hegging = readQuantity("hegging", MAX_HEGGING).value;
 
   const grasSubtotal = gras * (ratesCache.gras ?? 0);
   const tegelsSubtotal = tegels * (ratesCache.tegels ?? 0);
@@ -97,6 +123,20 @@ function showNotification(message, type = "error") {
   setTimeout(() => notif.classList.remove("show"), 3500);
 }
 
+function todayIsoDate() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function ensureFutureDateLimit() {
+  const dateInput = document.getElementById("deliveryDateTime");
+  if (!dateInput) return;
+  dateInput.min = todayIsoDate();
+}
+
 const orderModal = document.getElementById("orderModal");
 const closeModalBtn = document.querySelector(".close-button");
 const orderForm = document.getElementById("orderForm");
@@ -122,9 +162,15 @@ orderForm.addEventListener("submit", async (e) => {
   const customerName = document.getElementById("customerName").value.trim();
   const address = document.getElementById("address").value.trim();
   const deliveryDateTime = document.getElementById("deliveryDateTime").value;
+  const minDate = todayIsoDate();
 
   if (!customerName || !address || !deliveryDateTime) {
     showNotification("Alle velden zijn verplicht!");
+    return;
+  }
+
+  if (deliveryDateTime < minDate) {
+    showNotification("Leverdatum moet vandaag of later zijn");
     return;
   }
 
@@ -158,8 +204,8 @@ async function placeStandardOrder(e) {
   const selectedPackage = document.getElementById("pakketen").value;
 
   let total = 0;
-  if (selectedPackage === "Standard") total = 39.99;
-  else if (selectedPackage === "Premium") total = 49.99;
+  if (selectedPackage === "Standard") total = STANDARD_PRICE;
+  else if (selectedPackage === "Premium") total = PREMIUM_PRICE;
 
   const orderData = {
     pakket: selectedPackage,
@@ -179,9 +225,18 @@ async function placeCustomOrder(e) {
     return;
   }
 
-  const gras = numFromInput("gras");
-  const tegels = numFromInput("tegels");
-  const hegging = numFromInput("hegging");
+  const grasResult = readQuantity("gras", MAX_GRAS);
+  const tegelsResult = readQuantity("tegels", MAX_TEGELS);
+  const heggingResult = readQuantity("hegging", MAX_HEGGING);
+
+  if (grasResult.exceeded || tegelsResult.exceeded || heggingResult.exceeded) {
+    showNotification("Maxima: gras 500, tegels 300, hegging 100");
+    return;
+  }
+
+  const gras = grasResult.value;
+  const tegels = tegelsResult.value;
+  const hegging = heggingResult.value;
 
   if (
     (gras === 0 && tegels === 0 && hegging === 0) ||
@@ -238,15 +293,35 @@ document.getElementById("pakketen").addEventListener("change", function () {
     document.getElementById("card-offerte").style.display = "block";
     document.getElementById("button-standard").style.display = "none";
     document.getElementById("button-offerte").style.display = "block";
+    updatePackagePrice();
   } else {
     document.getElementById("card-offerte").style.display = "none";
     document.getElementById("button-standard").style.display = "inline-block";
     document.getElementById("button-offerte").style.display = "none";
+    updatePackagePrice();
   }
 });
 
+function updatePackagePrice() {
+  const selectedPackage = document.getElementById("pakketen").value;
+  const priceEl = document.getElementById("package-price");
+  if (!priceEl) return;
+
+  if (selectedPackage === "Standard") {
+    priceEl.textContent = eur(STANDARD_PRICE);
+  } else if (selectedPackage === "Premium") {
+    priceEl.textContent = eur(PREMIUM_PRICE);
+  } else {
+    priceEl.textContent = "Op maat";
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   displayOrders(".orders-table");
+
+  ensureFutureDateLimit();
+
+  updatePackagePrice();
 
   const standardBtn = document.getElementById("button-standard");
   const customBtn = document.getElementById("button-offerte");

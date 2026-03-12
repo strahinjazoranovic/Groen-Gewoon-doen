@@ -43,6 +43,9 @@ async function displayOrders(tableSelector) {
       <td>${order.delivery}</td>
       <td>€${order.total}</td>
       <td>${order.status}</td>
+      <td>
+        <button class="btn btn-danger" type="button" onclick="deleteOrderCustomer(${order.id})">Annuleer</button>
+      </td>
     `;
     tbody.appendChild(row);
   });
@@ -151,6 +154,14 @@ async function deleteOrder(orderId) {
 // Delete order from admin/user panel with confirmation
 async function deleteOrderAdmin(orderId) {
   if (confirm("Are you sure you want to delete this order?")) {
+    await deleteOrder(orderId);
+    displayOrders(".orders-table");
+  }
+}
+
+// Delete order from customer view with confirmation
+async function deleteOrderCustomer(orderId) {
+  if (confirm("Weet je zeker dat je deze order wilt annuleren?")) {
     await deleteOrder(orderId);
     displayOrders(".orders-table");
   }
