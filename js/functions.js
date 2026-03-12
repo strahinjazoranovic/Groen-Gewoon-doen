@@ -43,6 +43,9 @@ async function displayOrders(tableSelector) {
       <td>${order.delivery}</td>
       <td>€${order.total}</td>
       <td>${order.status}</td>
+      <td>
+        <button class="btn btn-danger" type="button" onclick="deleteOrderCustomer(${order.id})">Annuleer</button>
+      </td>
     `;
     tbody.appendChild(row);
   });

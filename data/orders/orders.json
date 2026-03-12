@@ -2,35 +2,19 @@
   "orders": [
     {
       "id": 1,
-      "customer": "Strahinja Zoranovic",
-      "address": "Test 1, 1234 AB, Gouda",
-      "delivery": "27-02-2026",
-      "pakket": "Standard",
-      "items": [
-        {
-          "product": "Pakket: Standard",
-          "quantity": 1
-        }
-      ],
-      "total": "39.99",
-      "status": "In behandeling",
-      "createdAt": "2026-02-26T10:01:33.443Z"
-    },
-    {
-      "id": 2,
-      "customer": "Test",
-      "address": "Test",
-      "delivery": "Test",
       "pakket": "Offerte",
       "items": [
         {
-          "product": "Custom: 1m² gras, 1m² tegels, 1m² hegging",
+          "product": "Custom: 7m² gras, 7m² tegels, 7m² hegging. Opties: Bladeren opruimen, Nepgras aanleggen",
           "quantity": 1
         }
       ],
-      "total": "216.97",
+      "total": "1818.77",
       "status": "In behandeling",
-      "createdAt": "2026-02-26T10:32:41.691Z"
+      "customer": "a",
+      "address": "bos koop",
+      "delivery": "2026-03-12",
+      "createdAt": "2026-03-12T10:26:41.110Z"
     }
   ]
 }
