@@ -121,12 +121,44 @@
           <input type="text" id="address" name="address" required />
 
           <label for="deliveryDateTime">Leverdatum:</label>
-          <input
-            type="date"
-            id="deliveryDateTime"
-            name="deliveryDateTime"
-            required
-          />
+          <div class="calendar" aria-label="Kalender">
+            <div class="calendar-header">
+              <button
+                type="button"
+                class="calendar-nav"
+                data-dir="-1"
+                aria-label="Vorige maand"
+              >
+                <
+              </button>
+              <div class="calendar-title" id="calendarTitle"></div>
+              <button
+                type="button"
+                class="calendar-nav"
+                data-dir="1"
+                aria-label="Volgende maand"
+              >
+                >
+              </button>
+            </div>
+            <div class="calendar-weekdays" aria-hidden="true">
+              <div>Ma</div>
+              <div>Di</div>
+              <div>Wo</div>
+              <div>Do</div>
+              <div>Vr</div>
+              <div>Za</div>
+              <div>Zo</div>
+            </div>
+            <div class="calendar-grid" id="calendarGrid"></div>
+            <div class="calendar-footer">
+              <div id="calendarSelected">Geen datum geselecteerd</div>
+              <button type="button" class="calendar-clear" id="calendarClear">
+                Wissen
+              </button>
+            </div>
+          </div>
+          <input type="hidden" id="deliveryDateTime" name="deliveryDateTime" />
 
           <button type="submit" id="submitOrder">Plaats Order</button>
         </form>

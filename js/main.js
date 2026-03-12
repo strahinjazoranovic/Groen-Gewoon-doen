@@ -131,6 +131,129 @@ function todayIsoDate() {
   return `${year}-${month}-${day}`;
 }
 
+function toIsoDate(year, monthIndex, day) {
+  const month = String(monthIndex + 1).padStart(2, "0");
+  const d = String(day).padStart(2, "0");
+  return `${year}-${month}-${d}`;
+}
+
+function initCalendarPicker() {
+  const grid = document.getElementById("calendarGrid");
+  const title = document.getElementById("calendarTitle");
+  const selectedText = document.getElementById("calendarSelected");
+  const clearBtn = document.getElementById("calendarClear");
+  const hiddenInput = document.getElementById("deliveryDateTime");
+  if (!grid || !title || !selectedText || !hiddenInput) return;
+
+  const monthNames = [
+    "januari",
+    "februari",
+    "maart",
+    "april",
+    "mei",
+    "juni",
+    "juli",
+    "augustus",
+    "september",
+    "oktober",
+    "november",
+    "december",
+  ];
+
+  const todayIso = todayIsoDate();
+  const today = new Date();
+  const state = {
+    year: today.getFullYear(),
+    month: today.getMonth(),
+    selected: hiddenInput.value || "",
+  };
+
+  function updateSelectedText() {
+    if (!state.selected) {
+      selectedText.textContent = "Geen datum geselecteerd";
+      return;
+    }
+    const [y, m, d] = state.selected.split("-").map(Number);
+    const dateObj = new Date(y, m - 1, d);
+    selectedText.textContent = dateObj.toLocaleDateString("nl-NL", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  }
+
+  function selectDate(iso) {
+    state.selected = iso;
+    hiddenInput.value = iso;
+    updateSelectedText();
+    render();
+  }
+
+  function render() {
+    title.textContent = `${monthNames[state.month]} ${state.year}`;
+    grid.innerHTML = "";
+
+    const firstDay = new Date(state.year, state.month, 1);
+    const startDay = (firstDay.getDay() + 6) % 7; // Monday start
+    const daysInMonth = new Date(state.year, state.month + 1, 0).getDate();
+
+    for (let i = 0; i < startDay; i += 1) {
+      const empty = document.createElement("div");
+      empty.className = "calendar-empty";
+      grid.appendChild(empty);
+    }
+
+    for (let day = 1; day <= daysInMonth; day += 1) {
+      const iso = toIsoDate(state.year, state.month, day);
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.textContent = String(day);
+      const weekday = new Date(state.year, state.month, day).getDay();
+      const isWeekend = weekday === 0 || weekday === 6;
+
+      if (iso === todayIso) btn.classList.add("is-today");
+      if (iso === state.selected) btn.classList.add("is-selected");
+      if (iso < todayIso || isWeekend) {
+        btn.classList.add("is-disabled");
+        btn.disabled = true;
+      }
+
+      btn.addEventListener("click", () => selectDate(iso));
+      grid.appendChild(btn);
+    }
+  }
+
+  document.querySelectorAll(".calendar-nav").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const dir = Number(btn.getAttribute("data-dir")) || 0;
+      const nextMonth = state.month + dir;
+      if (nextMonth < 0) {
+        state.month = 11;
+        state.year -= 1;
+      } else if (nextMonth > 11) {
+        state.month = 0;
+        state.year += 1;
+      } else {
+        state.month = nextMonth;
+      }
+      render();
+    });
+  });
+
+  if (clearBtn) {
+    clearBtn.addEventListener("click", () => {
+      state.selected = "";
+      hiddenInput.value = "";
+      updateSelectedText();
+      render();
+    });
+  }
+
+  updateSelectedText();
+  render();
+}
+
 function ensureFutureDateLimit() {
   const dateInput = document.getElementById("deliveryDateTime");
   if (!dateInput) return;
@@ -320,6 +443,7 @@ document.addEventListener("DOMContentLoaded", () => {
   displayOrders(".orders-table");
 
   ensureFutureDateLimit();
+  initCalendarPicker();
 
   updatePackagePrice();
 
