@@ -54,41 +54,25 @@
       <div class="packages-panel">
         <div class="packages-header">Pakketten Beheren</div>
 
-        <div class="packages-subtab">
-          <button
-            class="packages-subtablinks"
-            onclick="PackageTabs(event, 'packages-bewerk')"
-            type="button"
-          >
-            Bewerk
-          </button>
-          <button
-            class="packages-subtablinks"
-            onclick="PackageTabs(event, 'packages-nieuw')"
-            type="button"
-          >
-            Nieuw Pakket
-          </button>
-        </div>
+        <div class="packages-table"></div>
 
         <div
-          id="packages-nieuw"
-          class="packages-subtabcontent"
-          style="display: block"
+          id="editPackageContainer"
+          class="packages-form"
+          style="display: none; margin-top: 20px"
         >
-          <div class="packages-form">
-            <div class="packages-form-title">Nieuw Pakket</div>
-            <label for="package-name">Naam</label>
-            <input id="package-name" class="packages-input" type="text" />
-            <label for="package-price">Prijs</label>
-            <input id="package-id" type="hidden" />
-            <input id="package-price" class="packages-input" type="text" />
-            <button class="btn btn-dark" type="button">Toevoegen</button>
-          </div>
-        </div>
-
-        <div id="packages-bewerk" class="packages-subtabcontent">
-          <div class="packages-table"></div>
+          <div class="packages-form-title">Bewerk Pakket</div>
+          <input type="hidden" id="edit-package-id" />
+          <label for="edit-package-name">Naam</label>
+          <input id="edit-package-name" class="packages-input" type="text" />
+          <label for="edit-package-price">Prijs</label>
+          <input id="edit-package-price" class="packages-input" type="text" />
+          <button id="savePackageBtn" class="btn btn-dark" type="button">
+            Opslaan
+          </button>
+          <button id="cancelEditBtn" class="btn btn-muted" type="button">
+            Annuleren
+          </button>
         </div>
       </div>
     </div>
@@ -136,6 +120,22 @@
           <div class="modal-actions">
             <button id="confirmDelete" class="btn btn-green2">Ja</button>
             <button id="cancelDelete" class="btn btn-danger2">Nee</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="deleteModal2" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Weet je het zeker?</h2>
+          <span class="close-button" id="deleteModalClose">&times;</span>
+        </div>
+        <div class="modal-body">
+          <p>Wil je deze pakket echt verwijderen?</p>
+          <div class="modal-actions">
+            <button id="confirmDelete2" class="btn btn-green2">Ja</button>
+            <button id="cancelDelete2" class="btn btn-danger2">Nee</button>
           </div>
         </div>
       </div>

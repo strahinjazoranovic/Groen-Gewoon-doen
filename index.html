@@ -23,12 +23,10 @@
         <h1>Pakketten</h1>
       </div>
       <div id="card-content">
-        <select name="pakketen" id="pakketen">
-          <option value="Standard">Standard</option>
-          <option value="Premium">Premium</option>
-          <option value="Offerte">Custom offerte</option>
-        </select>
-        <div>Subtotaal: <span id="package-price">€ 0.00</span></div>
+        <select name="pakketen" id="pakketen"></select>
+        <div class="subtotaal">
+          Subtotaal: <span id="package-price">€ 0.00</span>
+        </div>
         <button id="button-standard" onclick="placeStandardOrder()">
           Bestel pakket
         </button>
@@ -81,20 +79,26 @@
           <div id="opties-lijst" class="options-list" aria-hidden="true">
             <div class="option-row">
               <span>Bladeren opruimen</span>
-              <input type="checkbox" id="optie-bladeren" name="optie-bladeren" />
+              <input
+                type="checkbox"
+                id="optie-bladeren"
+                name="optie-bladeren"
+              />
             </div>
             <div class="option-row">
               <span>Nepgras aanleggen</span>
               <input type="checkbox" id="optie-nepgras" name="optie-nepgras" />
             </div>
           </div>
-          <hr>
+          <hr />
 
           <div>Subtotaal maaien: <span id="grassSubtotal">€ 0.00</span></div>
           <div>Subtotaal tegels: <span id="tilesSubtotal">€ 0.00</span></div>
           <div>Subtotaal hegging: <span id="heggingSubtotal">€ 0.00</span></div>
           <div>Subtotaal opties: <span id="optiesSubtotaal">€ 0.00</span></div>
-          <div><strong>Totaal: <span id="total">€ 0.00</span></strong></div>
+          <div>
+            <strong>Totaal: <span id="total">€ 0.00</span></strong>
+          </div>
 
           <div id="button-container">
             <!-- <input type="checkbox" id="option" name="option" value="option" onclick="" />
@@ -160,7 +164,9 @@
           </div>
           <input type="hidden" id="deliveryDateTime" name="deliveryDateTime" />
 
-          <button type="submit" id="submitOrder" class="btn btn-green2">Plaats Order</button>
+          <button type="submit" id="submitOrder" class="btn btn-green2">
+            Plaats Order
+          </button>
         </form>
       </div>
     </div>
@@ -181,7 +187,7 @@
               <th>Leverdatum</th>
               <th>Prijs</th>
               <th>Status</th>
-              <th>Actos</th>
+              <th>Acties</th>
             </tr>
           </thead>
           <tbody>
@@ -191,7 +197,9 @@
               <td data-label="Offerte">Standaard</td>
               <td data-label="Status">In behandeling</td>
               <td data-label="Datum">10-10-2010</td>
-              <td data-label="Actie"><button class="btn btn-danger" type="button">Annuleer</button></td>
+              <td data-label="Actie">
+                <button class="btn btn-danger" type="button">Annuleer</button>
+              </td>
             </tr>
             <tr>
               <td data-label="Order ID">#002</td>
@@ -199,10 +207,28 @@
               <td data-label="Offerte">Premium</td>
               <td data-label="Status">Verzonden</td>
               <td data-label="Datum">10-10-2010</td>
-              <td data-label="Actie"><button class="btn btn-danger" type="button">Annuleer</button></td>
+              <td data-label="Actie">
+                <button class="btn btn-danger" type="button">Annuleer</button>
+              </td>
             </tr>
           </tbody>
         </table>
+      </div>
+    </div>
+
+    <div id="deleteModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Weet je het zeker?</h2>
+          <span class="close-button" id="deleteModalClose">&times;</span>
+        </div>
+        <div class="modal-body">
+          <p>Wil je deze order echt annuleren?</p>
+          <div class="modal-actions">
+            <button id="confirmDelete" class="btn btn-green2">Ja</button>
+            <button id="cancelDelete" class="btn btn-danger2">Nee</button>
+          </div>
+        </div>
       </div>
     </div>
 

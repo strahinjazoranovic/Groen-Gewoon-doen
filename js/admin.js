@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   closeModalBtn = orderModal.querySelector(".close-button");
   orderForm = document.getElementById("orderForm");
 
-  // ---- Modal Events ----
+  //Modal Events
   closeModalBtn.addEventListener("click", (e) => {
     e.preventDefault();
     orderModal.style.display = "none";
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.target === orderModal) orderModal.style.display = "none";
   });
 
-  // ---- Order Form Submit ----
+  // Order Form Submit
   if (orderForm) {
     orderForm.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -49,11 +49,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ---- Load initial data ----
+  // Load initial data
   displayOrdersAdmin(".orders-table");
   displayPackages();
 
-  // ---- Package Form Button ----
+  // Package Form Button
   const addPackageBtn = document.querySelector(
     "#packages-nieuw .packages-form button",
   );
@@ -123,55 +123,74 @@ async function updateOrderStatus(orderId) {
   openOrderModal(order);
 }
 
-orderForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
+if (orderForm) {
+  orderForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-  const customerName = document.getElementById("customerName").value.trim();
-  const address = document.getElementById("address").value.trim();
-  const deliveryDateTime = document.getElementById("deliveryDateTime").value;
+    const customerName = document.getElementById("customerName").value.trim();
+    const address = document.getElementById("address").value.trim();
+    const deliveryDateTime = document.getElementById("deliveryDateTime").value;
 
-  if (!customerName || !address || !deliveryDateTime) {
-    alert("Alle velden zijn verplicht!"); // you can also replace this with your notification div
-    return;
-  }
+    if (!customerName || !address || !deliveryDateTime) {
+      alert("Alle velden zijn verplicht!");
+      return;
+    }
 
-  const updatedOrder = {
-    ...currentOrderData,
-    customer: customerName,
-    address: address,
-    delivery: deliveryDateTime,
-  };
+    const updatedOrder = {
+      ...currentOrderData,
+      customer: customerName,
+      address: address,
+      delivery: deliveryDateTime,
+    };
 
-  const result = await updateOrder(currentOrderData.id, updatedOrder);
+    const result = await updateOrder(currentOrderData.id, updatedOrder);
 
-  if (result) {
-    displayOrdersAdmin(".orders-table");
-    orderModal.style.display = "none";
-  } else {
-    alert("Order update mislukt!"); // optional notification
-  }
+    if (result) {
+      displayOrdersAdmin(".orders-table");
+      orderModal.style.display = "none";
+    } else {
+      alert("Order update mislukt!"); // optional notification
+    }
+  });
+}
+
+// Show edit form for a package
+function editPackage(pkgId) {
+  fetchPackages().then((packages) => {
+    const pkg = packages.find((p) => p.id === pkgId);
+    if (!pkg) return;
+
+    // Fill form
+    document.getElementById("edit-package-id").value = pkg.id;
+    document.getElementById("edit-package-name").value = pkg.name;
+    document.getElementById("edit-package-price").value = pkg.price;
+
+    // Show edit container
+    document.getElementById("editPackageContainer").style.display = "flex";
+    // Scroll to edit container
+    document
+      .getElementById("editPackageContainer")
+      .scrollIntoView({ behavior: "smooth" });
+  });
+}
+
+// Save edited package
+document
+  .getElementById("savePackageBtn")
+  .addEventListener("click", async () => {
+    const pkgId = document.getElementById("edit-package-id").value;
+    const name = document.getElementById("edit-package-name").value;
+    const price = document.getElementById("edit-package-price").value;
+
+    await updatePackage(pkgId, { name, price });
+    document.getElementById("editPackageContainer").style.display = "none";
+    displayPackages(); // Refresh list
+  });
+
+// Cancel editing
+document.getElementById("cancelEditBtn").addEventListener("click", () => {
+  document.getElementById("editPackageContainer").style.display = "none";
 });
-
-// Edit package
-async function editPackage(packageId) {
-  const packages = await fetchPackages();
-  const pkg = packages.find((p) => p.id === packageId);
-  if (pkg) {
-    document.getElementById("package-name").value = pkg.name;
-    document.getElementById("package-price").value = pkg.price;
-    document.getElementById("package-id").value = pkg.id;
-    document.querySelector(".packages-form-title").textContent =
-      "Pakket Bewerken";
-  }
-}
-
-// Clear package form
-function clearPackageForm() {
-  document.getElementById("package-name").value = "";
-  document.getElementById("package-price").value = "";
-  document.getElementById("package-id").value = "";
-  document.querySelector(".packages-form-title").textContent = "Nieuw Pakket";
-}
 
 // Load data when page loads
 document.addEventListener("DOMContentLoaded", () => {

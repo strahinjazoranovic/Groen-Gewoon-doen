@@ -1,3 +1,11 @@
+let ratesCache = null;
+let packagesCache = null;
+
+const MAX_GRAS = 500;
+const MAX_TEGELS = 300;
+const MAX_HEGGING = 100;
+
+// Fetch rates
 async function fetchRates() {
   const response = await fetch("/data/rates/rates.json");
   if (!response.ok) {
@@ -7,12 +15,79 @@ async function fetchRates() {
   return await response.json();
 }
 
-let ratesCache = null;
-const STANDARD_PRICE = 39.99;
-const PREMIUM_PRICE = 59.99;
-const MAX_GRAS = 500;
-const MAX_TEGELS = 300;
-const MAX_HEGGING = 100;
+// Fetch packages
+async function fetchPackages() {
+  const response = await fetch("/data/packages/packages.json");
+
+  if (!response.ok) {
+    showNotification("Failed to fetch packages");
+    return [];
+  }
+
+  const data = await response.json();
+  return data.packages ?? [];
+}
+
+// Get package price
+function getPackagePrice(packageName) {
+  if (!packagesCache) return 0;
+
+  const pkg = packagesCache.find((p) => p.name === packageName);
+  if (!pkg) return 0;
+
+  return parseFloat(pkg.price.replace(",", "."));
+}
+
+// Populate packages dropdown dynamically
+function populatePackagesDropdown() {
+  const select = document.getElementById("pakketen");
+  if (!select || !packagesCache) return;
+
+  select.innerHTML = "";
+
+  packagesCache.forEach((pkg) => {
+    const option = document.createElement("option");
+    option.value = pkg.name;
+    option.textContent = pkg.name;
+    select.appendChild(option);
+  });
+
+  const customOption = document.createElement("option");
+  customOption.value = "Offerte";
+  customOption.textContent = "Custom offerte";
+  select.appendChild(customOption);
+}
+
+// Delete order as user
+async function deleteOrderUser(orderId) {
+  orderToDelete = orderId;
+  const modal = document.getElementById("deleteModal");
+  modal.style.display = "block";
+}
+
+// Ja button
+document.getElementById("confirmDelete").addEventListener("click", async () => {
+  if (orderToDelete) {
+    await deleteOrder(orderToDelete);
+    displayOrders(".orders-table");
+    orderToDelete = null;
+  }
+  document.getElementById("deleteModal").style.display = "none";
+});
+
+// Nee button
+document.getElementById("cancelDelete").addEventListener("click", () => {
+  orderToDelete = null;
+  document.getElementById("deleteModal").style.display = "none";
+});
+
+// Close modal when clicking X
+document.getElementById("deleteModalClose").addEventListener("click", () => {
+  orderToDelete = null;
+  document.getElementById("deleteModal").style.display = "none";
+});
+
+document.addEventListener("DOMContentLoaded", initQuoteCalculator);
 
 function eur(value) {
   return "€ " + value.toFixed(2);
@@ -112,8 +187,6 @@ async function initQuoteCalculator() {
 
   recalculateQuote();
 }
-
-document.addEventListener("DOMContentLoaded", initQuoteCalculator);
 
 function showNotification(message, type = "error") {
   const notif = document.getElementById("notification");
@@ -322,24 +395,24 @@ orderForm.addEventListener("submit", async (e) => {
   }
 });
 
+// Place standard order
 async function placeStandardOrder(e) {
   e.preventDefault();
-  const selectedPackage = document.getElementById("pakketen").value;
 
-  let total = 0;
-  if (selectedPackage === "Standard") total = STANDARD_PRICE;
-  else if (selectedPackage === "Premium") total = PREMIUM_PRICE;
+  const selectedPackage = document.getElementById("pakketen").value;
+  const total = getPackagePrice(selectedPackage);
 
   const orderData = {
     pakket: selectedPackage,
     items: [{ product: `Pakket: ${selectedPackage}`, quantity: 1 }],
-    total: total.toFixed(2),
+    total: parseFloat(total.toFixed(2)),
     status: "In behandeling",
   };
 
   openOrderModal(orderData);
 }
 
+// Place custom order
 async function placeCustomOrder(e) {
   e.preventDefault();
 
@@ -404,48 +477,53 @@ async function placeCustomOrder(e) {
         quantity: 1,
       },
     ],
-    total: total.toFixed(2),
+    total: parseFloat(total.toFixed(2)),
     status: "In behandeling",
   };
 
   openOrderModal(orderData);
 }
 
-document.getElementById("pakketen").addEventListener("change", function () {
-  if (this.value === "Offerte") {
-    document.getElementById("card-offerte").style.display = "block";
-    document.getElementById("button-standard").style.display = "none";
-    document.getElementById("button-offerte").style.display = "block";
-    updatePackagePrice();
-  } else {
-    document.getElementById("card-offerte").style.display = "none";
-    document.getElementById("button-standard").style.display = "inline-block";
-    document.getElementById("button-offerte").style.display = "none";
-    updatePackagePrice();
-  }
-});
-
 function updatePackagePrice() {
   const selectedPackage = document.getElementById("pakketen").value;
   const priceEl = document.getElementById("package-price");
+
   if (!priceEl) return;
 
-  if (selectedPackage === "Standard") {
-    priceEl.textContent = eur(STANDARD_PRICE);
-  } else if (selectedPackage === "Premium") {
-    priceEl.textContent = eur(PREMIUM_PRICE);
-  } else {
+  if (selectedPackage === "Offerte") {
     priceEl.textContent = "Op maat";
+    return;
   }
+
+  const price = getPackagePrice(selectedPackage);
+  priceEl.textContent = eur(price);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  displayOrders(".orders-table");
+// DOMContentLoaded
+document.addEventListener("DOMContentLoaded", async () => {
+  packagesCache = await fetchPackages();
+  populatePackagesDropdown();
 
+  displayOrders(".orders-table");
   ensureFutureDateLimit();
   initCalendarPicker();
-
+  initQuoteCalculator();
   updatePackagePrice();
+
+  const pakketenSelect = document.getElementById("pakketen");
+  pakketenSelect?.addEventListener("change", () => {
+    updatePackagePrice();
+
+    if (pakketenSelect.value === "Offerte") {
+      document.getElementById("card-offerte").style.display = "block";
+      document.getElementById("button-standard").style.display = "none";
+      document.getElementById("button-offerte").style.display = "block";
+    } else {
+      document.getElementById("card-offerte").style.display = "none";
+      document.getElementById("button-standard").style.display = "inline-block";
+      document.getElementById("button-offerte").style.display = "none";
+    }
+  });
 
   const standardBtn = document.getElementById("button-standard");
   const customBtn = document.getElementById("button-offerte");

@@ -1,5 +1,5 @@
 // API Base URL
-const API_BASE = "http://localhost:3000/data";
+const API_BASE = "http://localhost:3000/data"; 
 
 // Fetch all orders
 async function fetchOrders() {
@@ -25,14 +25,14 @@ async function fetchPackages() {
   }
 }
 
-// Display orders in table
+// Display orders in user table
 async function displayOrders(tableSelector) {
   const orders = await fetchOrders();
   const tbody = document.querySelector(`${tableSelector} tbody`);
 
   if (!tbody) return;
 
-  tbody.innerHTML = ""; // Clear existing rows
+  tbody.innerHTML = "";
 
   orders.forEach((order) => {
     const row = document.createElement("tr");
@@ -44,7 +44,7 @@ async function displayOrders(tableSelector) {
       <td>€${order.total}</td>
       <td>${order.status}</td>
       <td>
-        <button class="btn btn-danger" type="button" onclick="deleteOrderCustomer(${order.id})">Annuleer</button>
+        <button class="btn btn-danger" onclick="deleteOrderUser(${order.id})">Annuleer</button>
       </td>
     `;
     tbody.appendChild(row);
@@ -58,7 +58,7 @@ async function displayOrdersAdmin(tableSelector) {
 
   if (!tbody) return;
 
-  tbody.innerHTML = ""; // Clear existing rows
+  tbody.innerHTML = "";
 
   orders.forEach((order) => {
     const row = document.createElement("tr");
@@ -71,25 +71,27 @@ async function displayOrdersAdmin(tableSelector) {
       <td>€${order.total}</td>
       <td>${order.status}</td>
       <td>
-        <button class="btn btn-green" type="button" onclick="updateOrderStatus(${order.id})">Update</button>  
-        <button class="btn btn-danger" type="button" onclick="deleteOrderAdmin(${order.id})">Verwijder</button>
-      </td>   
+        <button class="btn btn-green" onclick="updateOrderStatus(${order.id})">Update</button>
+        <button class="btn btn-danger" onclick="deleteOrderAdmin(${order.id})">Verwijder</button>
+      </td>
     `;
     tbody.appendChild(row);
   });
 }
 
-// Display packages in table
+// Display packages
 async function displayPackages() {
   const packages = await fetchPackages();
   const packagesDiv = document.querySelector(".packages-table");
 
   if (!packagesDiv) return;
 
-  // Keep the header row and clear other rows
   const header = packagesDiv.querySelector(".packages-head");
+  const headerClone = header ? header.cloneNode(true) : null;
+
   packagesDiv.innerHTML = "";
-  packagesDiv.appendChild(header);
+
+  if (headerClone) packagesDiv.appendChild(headerClone);
 
   packages.forEach((pkg) => {
     const row = document.createElement("div");
@@ -97,14 +99,14 @@ async function displayPackages() {
     row.innerHTML = `
       <div>${pkg.name}</div>
       <div>€ ${pkg.price || 0}</div>
-      <div><button class="btn btn-muted" type="button" onclick="editPackage(${pkg.id})">Bewerk</button></div>
-      <div><button class="btn btn-danger" type="button" onclick="deletePackage(${pkg.id})">Verwijder</button></div>
+      <div><button class="btn btn-muted" onclick="editPackage(${pkg.id})">Bewerk</button></div>
+      <div><button class="btn btn-danger" onclick="deletePackageModal(${pkg.id})">Verwijder</button></div>
     `;
     packagesDiv.appendChild(row);
   });
 }
 
-// CREATE: Add new order
+// CREATE order
 async function createOrder(orderData) {
   try {
     const response = await fetch(`${API_BASE}/orders`, {
@@ -112,15 +114,16 @@ async function createOrder(orderData) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(orderData),
     });
+
     if (!response.ok) throw new Error("Failed to create order");
+
     return await response.json();
   } catch (error) {
     console.error("Error creating order:", error);
-    return null;
   }
 }
 
-// UPDATE: Update order by ID
+// UPDATE order
 async function updateOrder(orderId, orderData) {
   try {
     const response = await fetch(`${API_BASE}/orders/${orderId}`, {
@@ -128,37 +131,38 @@ async function updateOrder(orderId, orderData) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(orderData),
     });
+
     if (!response.ok) throw new Error("Failed to update order");
+
     return await response.json();
   } catch (error) {
     console.error("Error updating order:", error);
-    return null;
   }
 }
 
-// DELETE: Delete order by ID
+// DELETE order
 async function deleteOrder(orderId) {
   try {
     const response = await fetch(`${API_BASE}/orders/${orderId}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
     });
+
     if (!response.ok) throw new Error("Failed to delete order");
+
     return await response.json();
   } catch (error) {
     console.error("Error deleting order:", error);
-    return null;
   }
 }
-let orderToDelete = null;
 
-async function deleteOrderAdmin(orderId) {
+// Open order delete modal
+function deleteOrderAdmin(orderId) {
   orderToDelete = orderId;
-  const modal = document.getElementById("deleteModal");
-  modal.style.display = "block";
+  document.getElementById("deleteModal").style.display = "block";
 }
 
-// Ja button
+// Confirm order delete
 document.getElementById("confirmDelete").addEventListener("click", async () => {
   if (orderToDelete) {
     await deleteOrder(orderToDelete);
@@ -168,35 +172,40 @@ document.getElementById("confirmDelete").addEventListener("click", async () => {
   document.getElementById("deleteModal").style.display = "none";
 });
 
-// Nee button
+// Cancel order delete
 document.getElementById("cancelDelete").addEventListener("click", () => {
   orderToDelete = null;
   document.getElementById("deleteModal").style.display = "none";
 });
 
-// Close modal when clicking X
+// Close order modal
 document.getElementById("deleteModalClose").addEventListener("click", () => {
   orderToDelete = null;
   document.getElementById("deleteModal").style.display = "none";
 });
 
-// CREATE: Add new package
-async function createPackage(packageData) {
-  try {
-    const response = await fetch(`${API_BASE}/packages`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(packageData),
-    });
-    if (!response.ok) throw new Error("Failed to create package");
-    return await response.json();
-  } catch (error) {
-    console.error("Error creating package:", error);
-    return null;
-  }
-}
+// Packages
+let orderToDelete = null;
+let packageToDelete = null;
 
-// UPDATE: Update package by ID
+// Create package
+// async function createPackage(packageData) {
+//   try {
+//     const response = await fetch(`${API_BASE}/packages`, {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify(packageData),
+//     });
+
+//     if (!response.ok) throw new Error("Failed to create package");
+
+//     return await response.json();
+//   } catch (error) {
+//     console.error("Error creating package:", error);
+//   }
+// }
+
+// UPDATE package
 async function updatePackage(packageId, packageData) {
   try {
     const response = await fetch(`${API_BASE}/packages/${packageId}`, {
@@ -204,27 +213,65 @@ async function updatePackage(packageId, packageData) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(packageData),
     });
+
     if (!response.ok) throw new Error("Failed to update package");
+
     return await response.json();
   } catch (error) {
     console.error("Error updating package:", error);
-    return null;
   }
 }
 
-// DELETE: Delete package by ID
+// DELETE package
 async function deletePackage(packageId) {
   try {
-    if (!confirm("Are you sure you want to delete this package?")) return;
     const response = await fetch(`${API_BASE}/packages/${packageId}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
     });
+
     if (!response.ok) throw new Error("Failed to delete package");
-    displayPackages(); // Refresh the package list
+
+    displayPackages();
     return await response.json();
   } catch (error) {
     console.error("Error deleting package:", error);
-    return null;
   }
+}
+
+// Open package delete modal
+function deletePackageModal(packageId) {
+  packageToDelete = packageId;
+  document.getElementById("deleteModal2").style.display = "block";
+}
+
+const confirmBtn = document.getElementById("confirmDelete2");
+
+if (confirmBtn) {
+  confirmBtn.addEventListener("click", async () => {
+    if (packageToDelete) {
+      await deletePackage(packageToDelete);
+      packageToDelete = null;
+    }
+
+    document.getElementById("deleteModal2").style.display = "none";
+  });
+}
+
+const cancelBtn = document.getElementById("cancelDelete2");
+
+if (cancelBtn) {
+  cancelBtn.addEventListener("click", () => {
+    packageToDelete = null;
+    document.getElementById("deleteModal2").style.display = "none";
+  });
+}
+
+const closeBtn = document.getElementById("deleteModalClose2");
+
+if (closeBtn) {
+  closeBtn.addEventListener("click", () => {
+    packageToDelete = null;
+    document.getElementById("deleteModal2").style.display = "none";
+  });
 }

@@ -51,6 +51,10 @@ p {
   transition: all 0.3s ease-in;
 }
 
+.subtotaal {
+  margin-top: 12px;
+}
+
 .btn-green {
   background: #8ee58a;
 }
@@ -147,6 +151,19 @@ p {
   padding-left: 125px;
   padding-right: 125px;
 }
+
+#card-content > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+#card-content > div h3 {
+  margin: 0;
+  min-width: 100px;
+}
+
 .tabcontent.active {
   display: block;
 }
@@ -203,8 +220,7 @@ p {
   margin-top: 10px;
   padding-top: 10px;
   border-top: 1px solid #cfd6d1;
-  display: grid;
-  grid-template-columns: 120px 1fr;
+  display: flex;
   gap: 8px 10px;
   align-items: center;
 }
