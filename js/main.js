@@ -1,11 +1,48 @@
+// This is the functions.js file, which holds all the code for the index.html page
+
+// Give these names an value
 let ratesCache = null;
 let packagesCache = null;
 
+// Define max values for gras, tegels and hegging
 const MAX_GRAS = 500;
 const MAX_TEGELS = 300;
 const MAX_HEGGING = 100;
 
-// Fetch rates
+// Eventlistener for when the page gets loaded
+document.addEventListener("DOMContentLoaded", async () => {
+  packagesCache = await fetchPackages();
+  populatePackagesDropdown();
+
+  displayOrders(".orders-table");
+  ensureFutureDateLimit();
+  initCalendarPicker();
+  initQuoteCalculator();
+  updatePackagePrice();
+
+  const pakketenSelect = document.getElementById("pakketen");
+  pakketenSelect?.addEventListener("change", () => {
+    updatePackagePrice();
+
+    if (pakketenSelect.value === "Offerte") {
+      document.getElementById("card-offerte").style.display = "block";
+      document.getElementById("button-standard").style.display = "none";
+      document.getElementById("button-offerte").style.display = "block";
+    } else {
+      document.getElementById("card-offerte").style.display = "none";
+      document.getElementById("button-standard").style.display = "inline-block";
+      document.getElementById("button-offerte").style.display = "none";
+    }
+  });
+
+  const standardBtn = document.getElementById("button-standard");
+  const customBtn = document.getElementById("button-offerte");
+
+  standardBtn?.addEventListener("click", placeStandardOrder);
+  customBtn?.addEventListener("click", placeCustomOrder);
+});
+
+// Fetch rates from an json
 async function fetchRates() {
   const response = await fetch("/data/rates/rates.json");
   if (!response.ok) {
@@ -65,38 +102,32 @@ async function deleteOrderUser(orderId) {
   modal.style.display = "block";
 }
 
-// Ja button
-document.getElementById("confirmDelete").addEventListener("click", async () => {
-  if (orderToDelete) {
-    await deleteOrder(orderToDelete);
-    displayOrders(".orders-table");
-    orderToDelete = null;
-  }
-  document.getElementById("deleteModal").style.display = "none";
-});
+// Ja button, which has an ? to ensure the js doesn't crash if the html doesn't have confirmDelete on the page
+document
+  .getElementById("confirmDelete")
+  ?.addEventListener("click", async () => {
+    if (orderToDelete) {
+      await deleteOrder(orderToDelete);
+      displayOrders(".orders-table");
+      orderToDelete = null;
+    }
+    document.getElementById("deleteModal").style.display = "none";
+  });
 
-// Nee button
-document.getElementById("cancelDelete").addEventListener("click", () => {
+// Nee button, which has an ? to ensure the js doesn't crash if the html doesn't have confirmDelete on the page
+document.getElementById("cancelDelete")?.addEventListener("click", () => {
   orderToDelete = null;
   document.getElementById("deleteModal").style.display = "none";
 });
 
-// Close modal when clicking X
-document.getElementById("deleteModalClose").addEventListener("click", () => {
+// Close modal when clicking X, which has an ? to ensure the js doesn't crash if the html doesn't have confirmDelete on the page
+document.getElementById("deleteModalClose")?.addEventListener("click", () => {
   orderToDelete = null;
   document.getElementById("deleteModal").style.display = "none";
 });
-
-document.addEventListener("DOMContentLoaded", initQuoteCalculator);
 
 function eur(value) {
   return "€ " + value.toFixed(2);
-}
-
-function numFromInput(id) {
-  const el = document.getElementById(id);
-  const v = parseFloat(el?.value);
-  return Number.isFinite(v) ? v : 0;
 }
 
 function readQuantity(id, max) {
@@ -120,6 +151,7 @@ function readQuantity(id, max) {
   return { value, exceeded };
 }
 
+// Function to calculate gras, tegels and hegging using /data/rates/rates.json
 function recalculateQuote() {
   if (!ratesCache) return;
 
@@ -188,6 +220,7 @@ async function initQuoteCalculator() {
   recalculateQuote();
 }
 
+// Show an notification when stuff happens correctly or fails
 function showNotification(message, type = "error") {
   const notif = document.getElementById("notification");
   notif.textContent = message;
@@ -196,20 +229,7 @@ function showNotification(message, type = "error") {
   setTimeout(() => notif.classList.remove("show"), 3500);
 }
 
-function todayIsoDate() {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(now.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-}
-
-function toIsoDate(year, monthIndex, day) {
-  const month = String(monthIndex + 1).padStart(2, "0");
-  const d = String(day).padStart(2, "0");
-  return `${year}-${month}-${d}`;
-}
-
+// Function for the calender
 function initCalendarPicker() {
   const grid = document.getElementById("calendarGrid");
   const title = document.getElementById("calendarTitle");
@@ -327,6 +347,20 @@ function initCalendarPicker() {
   render();
 }
 
+function todayIsoDate() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function toIsoDate(year, monthIndex, day) {
+  const month = String(monthIndex + 1).padStart(2, "0");
+  const d = String(day).padStart(2, "0");
+  return `${year}-${month}-${d}`;
+}
+
 function ensureFutureDateLimit() {
   const dateInput = document.getElementById("deliveryDateTime");
   if (!dateInput) return;
@@ -425,15 +459,11 @@ async function placeCustomOrder(e) {
   const tegelsResult = readQuantity("tegels", MAX_TEGELS);
   const heggingResult = readQuantity("hegging", MAX_HEGGING);
 
-  if (grasResult.exceeded || tegelsResult.exceeded || heggingResult.exceeded) {
-    showNotification("Maxima: gras 500, tegels 300, hegging 100");
-    return;
-  }
-
   const gras = grasResult.value;
   const tegels = tegelsResult.value;
   const hegging = heggingResult.value;
 
+  // Makes sure that the user can't submit an order without inputting anything, and if he does he will get an notification and get returned
   if (
     (gras === 0 && tegels === 0 && hegging === 0) ||
     gras < 0 ||
@@ -498,36 +528,3 @@ function updatePackagePrice() {
   const price = getPackagePrice(selectedPackage);
   priceEl.textContent = eur(price);
 }
-
-// DOMContentLoaded
-document.addEventListener("DOMContentLoaded", async () => {
-  packagesCache = await fetchPackages();
-  populatePackagesDropdown();
-
-  displayOrders(".orders-table");
-  ensureFutureDateLimit();
-  initCalendarPicker();
-  initQuoteCalculator();
-  updatePackagePrice();
-
-  const pakketenSelect = document.getElementById("pakketen");
-  pakketenSelect?.addEventListener("change", () => {
-    updatePackagePrice();
-
-    if (pakketenSelect.value === "Offerte") {
-      document.getElementById("card-offerte").style.display = "block";
-      document.getElementById("button-standard").style.display = "none";
-      document.getElementById("button-offerte").style.display = "block";
-    } else {
-      document.getElementById("card-offerte").style.display = "none";
-      document.getElementById("button-standard").style.display = "inline-block";
-      document.getElementById("button-offerte").style.display = "none";
-    }
-  });
-
-  const standardBtn = document.getElementById("button-standard");
-  const customBtn = document.getElementById("button-offerte");
-
-  standardBtn?.addEventListener("click", placeStandardOrder);
-  customBtn?.addEventListener("click", placeCustomOrder);
-});

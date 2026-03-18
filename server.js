@@ -19,7 +19,7 @@ function readJsonFile(filePath) {
   try {
     const data = fs.readFileSync(filePath, "utf8");
     const parsed = JSON.parse(data);
-    
+
     // Return the array from the nested structure
     if (parsed.orders) return parsed.orders;
     if (parsed.packages) return parsed.packages;
@@ -174,6 +174,33 @@ app.delete("/data/packages/:id", (req, res) => {
   writeJsonFile(packagesPath, packages);
 
   res.json({ message: "Package deleted", package: deletedPackage[0] });
+});
+
+// Path for /api/rates which is /data/rates/rates.json
+const ratesPath = path.join(__dirname, "data", "rates", "rates.json");
+
+// GET current rates route
+app.get("/api/rates", (req, res) => {
+  try {
+    const data = fs.readFileSync(ratesPath, "utf8");
+    const rates = JSON.parse(data);
+    res.json(rates);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to read rates" });
+  }
+});
+
+// POST update rates route
+app.post("/api/rates", (req, res) => {
+  try {
+    const newRates = req.body;
+    fs.writeFileSync(ratesPath, JSON.stringify(newRates, null, 2));
+    res.json({ message: "Rates updated", rates: newRates });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to save rates" });
+  }
 });
 
 // Start server

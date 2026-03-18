@@ -59,7 +59,7 @@
         <div
           id="editPackageContainer"
           class="packages-form"
-          style="display: none; margin-top: 20px"
+          style="display: none; margin-top: 16px"
         >
           <div class="packages-form-title">Bewerk Pakket</div>
           <input type="hidden" id="edit-package-id" />
@@ -67,12 +67,14 @@
           <input id="edit-package-name" class="packages-input" type="text" />
           <label for="edit-package-price">Prijs</label>
           <input id="edit-package-price" class="packages-input" type="text" />
-          <button id="savePackageBtn" class="btn btn-dark" type="button">
-            Opslaan
-          </button>
-          <button id="cancelEditBtn" class="btn btn-muted" type="button">
-            Annuleren
-          </button>
+          <div class="packages-form-title2">
+            <button id="savePackageBtn" class="btn btn-dark" type="button">
+              Opslaan
+            </button>
+            <button id="cancelEditBtn" class="btn btn-muted" type="button">
+              Annuleren
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -82,14 +84,27 @@
       <div class="packages-panel">
         <div class="packages-header">Tarieven Beheren</div>
         <div class="packages-form">
-          <label for="rate-grass">Prijs per m² Gras</label>
+          <label for="rate-grass">Prijs per m² gras</label>
           <input id="rate-grass" class="packages-input" type="text" />
-          <label for="rate-tiles">Prijs per m² Tegels</label>
+
+          <label for="rate-tiles">Prijs per m² tegels</label>
           <input id="rate-tiles" class="packages-input" type="text" />
-          <button class="btn btn-dark" type="button">Opslaan</button>
+
+          <label for="rate-hegging">Prijs per m² hegging</label>
+          <input id="rate-hegging" class="packages-input" type="text" />
+
+          <label for="rate-bladeren">Prijs optie bladeren opruimen</label>
+          <input id="rate-bladeren" class="packages-input" type="text" />
+
+          <label for="rate-nepGrass">Prijs optie nepgras aanleggen</label>
+          <input id="rate-nepGrass" class="packages-input" type="text" />
+
+          <button class="btn btn-green" type="button">Opslaan</button>
         </div>
       </div>
     </div>
+
+    <div id="notification" class="notification"></div>
 
     <div id="orderModal" class="modal">
       <div class="modal-content">

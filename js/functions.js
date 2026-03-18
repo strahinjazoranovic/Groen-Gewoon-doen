@@ -1,14 +1,30 @@
-// API Base URL
-const API_BASE = "http://localhost:3000/data"; 
+// This is the functions.js file, which holds all the functions for the node server like fetching or creating orders
+
+const API_BASE = "http://localhost:3000/data";
+
+// Packages
+let orderToDelete = null;
+let packageToDelete = null;
+
+// Show an notification when stuff happens correctly or fails
+function showNotification(message, type = "error") {
+  const notif = document.getElementById("notification");
+  notif.textContent = message;
+  notif.style.backgroundColor = type === "success" ? "#4CAF50" : "#f44336";
+  notif.classList.add("show");
+  setTimeout(() => notif.classList.remove("show"), 3500);
+}
 
 // Fetch all orders
 async function fetchOrders() {
   try {
-    const response = await fetch(`${API_BASE}/orders`);
+    const response = await fetch(`/data/orders/orders.json`);
     if (!response.ok) throw new Error("Failed to fetch orders");
-    return await response.json();
+    const data = await response.json();
+    return data.orders ?? [];
   } catch (error) {
     console.error("Error fetching orders:", error);
+    showNotification("Failed fetching orders");
     return [];
   }
 }
@@ -16,11 +32,13 @@ async function fetchOrders() {
 // Fetch all packages
 async function fetchPackages() {
   try {
-    const response = await fetch(`${API_BASE}/packages`);
+    const response = await fetch(`/data/packages/packages.json`);
     if (!response.ok) throw new Error("Failed to fetch packages");
-    return await response.json();
+    const data = await response.json();
+    return data.packages ?? [];
   } catch (error) {
     console.error("Error fetching packages:", error);
+    showNotification("Failed fetching packages");
     return [];
   }
 }
@@ -117,9 +135,12 @@ async function createOrder(orderData) {
 
     if (!response.ok) throw new Error("Failed to create order");
 
-    return await response.json();
+    const data = await response.json();
+    return data.orders ?? [];
   } catch (error) {
     console.error("Error creating order:", error);
+    showNotification("Failed creating order");
+    return null;
   }
 }
 
@@ -134,9 +155,11 @@ async function updateOrder(orderId, orderData) {
 
     if (!response.ok) throw new Error("Failed to update order");
 
-    return await response.json();
+    const data = await response.json();
+    return data.orders ?? [];
   } catch (error) {
     console.error("Error updating order:", error);
+    showNotification("Failed updating order");
   }
 }
 
@@ -150,9 +173,11 @@ async function deleteOrder(orderId) {
 
     if (!response.ok) throw new Error("Failed to delete order");
 
-    return await response.json();
+    const data = await response.json();
+    return data.orders ?? [];
   } catch (error) {
     console.error("Error deleting order:", error);
+    showNotification("Failed deleting order");
   }
 }
 
@@ -184,27 +209,6 @@ document.getElementById("deleteModalClose").addEventListener("click", () => {
   document.getElementById("deleteModal").style.display = "none";
 });
 
-// Packages
-let orderToDelete = null;
-let packageToDelete = null;
-
-// Create package
-// async function createPackage(packageData) {
-//   try {
-//     const response = await fetch(`${API_BASE}/packages`, {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify(packageData),
-//     });
-
-//     if (!response.ok) throw new Error("Failed to create package");
-
-//     return await response.json();
-//   } catch (error) {
-//     console.error("Error creating package:", error);
-//   }
-// }
-
 // UPDATE package
 async function updatePackage(packageId, packageData) {
   try {
@@ -216,9 +220,11 @@ async function updatePackage(packageId, packageData) {
 
     if (!response.ok) throw new Error("Failed to update package");
 
-    return await response.json();
+    const data = await response.json();
+    return data.packages ?? [];
   } catch (error) {
     console.error("Error updating package:", error);
+    showNotification("Failed updating order");
   }
 }
 
@@ -233,9 +239,11 @@ async function deletePackage(packageId) {
     if (!response.ok) throw new Error("Failed to delete package");
 
     displayPackages();
-    return await response.json();
+    const data = await response.json();
+    return data.packages ?? [];
   } catch (error) {
     console.error("Error deleting package:", error);
+    showNotification("Failed to delete package");
   }
 }
 
@@ -246,7 +254,6 @@ function deletePackageModal(packageId) {
 }
 
 const confirmBtn = document.getElementById("confirmDelete2");
-
 if (confirmBtn) {
   confirmBtn.addEventListener("click", async () => {
     if (packageToDelete) {
@@ -259,7 +266,6 @@ if (confirmBtn) {
 }
 
 const cancelBtn = document.getElementById("cancelDelete2");
-
 if (cancelBtn) {
   cancelBtn.addEventListener("click", () => {
     packageToDelete = null;
@@ -268,7 +274,6 @@ if (cancelBtn) {
 }
 
 const closeBtn = document.getElementById("deleteModalClose2");
-
 if (closeBtn) {
   closeBtn.addEventListener("click", () => {
     packageToDelete = null;

@@ -217,12 +217,21 @@ p {
 }
 
 .packages-form {
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px solid #cfd6d1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
   display: flex;
   gap: 8px 10px;
-  align-items: center;
+}
+
+.packages-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  display: flex;
+  gap: 8px 10px;
 }
 
 .packages-form.hidden {
@@ -242,6 +251,7 @@ p {
 
 .packages-input {
   height: 24px;
+  width: 240px;
   border: 1px solid #c0c8c4;
   border-radius: 4px;
   padding: 0 8px;
@@ -403,16 +413,13 @@ input {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(
+  background:
+    radial-gradient(
       circle at 15% 10%,
       rgba(25, 147, 45, 0.12),
       transparent 45%
     ),
-    radial-gradient(
-      circle at 85% 80%,
-      rgba(49, 104, 73, 0.14),
-      transparent 50%
-    );
+    radial-gradient(circle at 85% 80%, rgba(49, 104, 73, 0.14), transparent 50%);
   pointer-events: none;
 }
 
@@ -441,7 +448,8 @@ input {
 .calendar-nav {
   border: 1px solid rgba(25, 147, 45, 0.3);
   background: linear-gradient(180deg, #ffffff 0%, #eef5f1 100%);
-  color: var(--cal-ink);  border-radius: 8px;
+  color: var(--cal-ink);
+  border-radius: 8px;
   height: 30px;
   display: flex;
   align-items: center;
@@ -450,7 +458,9 @@ input {
   cursor: pointer;
   font-weight: 700;
   font-size: 16px;
-  transition: transform 160ms ease, box-shadow 160ms ease;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
 }
 
 .calendar-nav:hover {
@@ -490,7 +500,10 @@ input {
   align-items: center;
   justify-content: center;
   line-height: 1px;
-  transition: transform 160ms ease, box-shadow 160ms ease, border 160ms ease;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    border 160ms ease;
 }
 
 .calendar-grid button:hover {
