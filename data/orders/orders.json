@@ -9,12 +9,12 @@
           "quantity": 1
         }
       ],
-      "total": 16.98,
+      "total": 516.95,
       "status": "In behandeling",
       "customer": "Strahinja Zoranovic",
-      "address": "Test 1,  1234AB, Gouda",
-      "delivery": "2026-03-18",
-      "createdAt": "2026-03-18T10:39:09.764Z"
+      "address": "Test 1, 1234AB, Gouda",
+      "delivery": "2026-03-20",
+      "createdAt": "2026-03-20T12:18:05.683Z"
     }
   ]
 }

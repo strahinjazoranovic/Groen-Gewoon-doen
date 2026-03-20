@@ -65,13 +65,16 @@ async function fetchPackages() {
   return data.packages ?? [];
 }
 
-// Get package price
 function getPackagePrice(packageName) {
   if (!packagesCache) return 0;
 
   const pkg = packagesCache.find((p) => p.name === packageName);
   if (!pkg) return 0;
 
+  // If pkg.price is already a number, just return it
+  if (typeof pkg.price === "number") return pkg.price;
+
+  // Otherwise parse string
   return parseFloat(pkg.price.replace(",", "."));
 }
 
@@ -392,15 +395,25 @@ orderForm.addEventListener("submit", async (e) => {
   const customerName = document.getElementById("customerName").value.trim();
   const address = document.getElementById("address").value.trim();
   const deliveryDateTime = document.getElementById("deliveryDateTime").value;
-  const minDate = todayIsoDate();
 
+  // Returns the user if fields are missing
   if (!customerName || !address || !deliveryDateTime) {
     showNotification("Alle velden zijn verplicht!");
     return;
   }
 
-  if (deliveryDateTime < minDate) {
-    showNotification("Leverdatum moet vandaag of later zijn");
+  // Validate the user based on dutch address
+  function isValidAddress(addr) {
+    const regex =
+      /^[\w\s.'-]+\s\d{1,4}[a-zA-Z]?,\s?\d{4}\s?[A-Z]{2},\s?[\w\s.'-]+$/;
+    return regex.test(addr);
+  }
+
+  // Make the user input an valid address
+  if (!isValidAddress(address)) {
+    showNotification(
+      "Voer een geldig adres in (bijv. Straat 12, 1234 AB Stad)",
+    );
     return;
   }
 
@@ -417,13 +430,6 @@ orderForm.addEventListener("submit", async (e) => {
     showNotification("Order succesvol geplaatst!", "success");
     orderModal.style.display = "none";
     displayOrders(".orders-table");
-
-    if (orderToPlace.pakket === "Offerte") {
-      ["gras", "tegels", "hegging"].forEach((id) => {
-        document.getElementById(id).value = "";
-      });
-      recalculateQuote();
-    }
   } else {
     showNotification("Order plaatsen mislukt!");
   }
@@ -452,7 +458,6 @@ async function placeCustomOrder(e) {
 
   if (!ratesCache) {
     showNotification("Rates not loaded yet. Please wachten.");
-    return;
   }
 
   const grasResult = readQuantity("gras", MAX_GRAS);

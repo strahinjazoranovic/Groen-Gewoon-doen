@@ -23,6 +23,10 @@ html {
   font-family: "Inter", sans-serif;
 }
 
+#logo {
+  width: 80px;
+}
+
 h1,
 h2,
 h3,
@@ -225,7 +229,7 @@ p {
   gap: 8px 10px;
 }
 
-.packages-form {
+.packages-form2 {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -257,6 +261,11 @@ p {
   padding: 0 8px;
   font-family: "Inter", sans-serif;
   font-size: 13px;
+}
+
+select#orderStatus {
+  padding: 8px;
+  width: 100%;
 }
 
 .packages-textarea {
@@ -776,160 +785,212 @@ input {
   }
 }
 
-@media (max-width: 900px) {
-  .tab {
-    flex-wrap: wrap;
+/* Large tablets (1024px and below) */
+@media (max-width: 1024px) {
+  #card,
+  #card-offerte {
+    margin: 24px 40px;
+  }
+
+  .tab,
+  .tabcontent {
+    padding-left: 40px;
+    padding-right: 40px;
   }
 
   .packages-row {
     grid-template-columns: 2fr 1fr 1fr 1fr;
-  }
-}
-
-@media (max-width: 600px) {
-  #card {
-    margin: 12px;
+    font-size: 13px;
   }
 
-  .packages-row {
-    grid-template-columns: 1fr 1fr;
+  #card-content > div h3 {
+    min-width: 80px;
+    font-size: 14px;
   }
 
-  .packages-form {
-    grid-template-columns: 1fr;
-  }
-
-  .packages-add {
-    grid-column: 1 / -1;
-    justify-self: start;
+  select,
+  input,
+  .packages-input {
+    width: 90%;
   }
 
   .orders-table th,
   .orders-table td {
     padding: 6px 8px;
-    font-size: 12px;
-  }
-
-  .btn-gradient {
-    width: 100%;
   }
 }
 
-@media (max-width: 480px) {
-  #header {
-    padding: 16px;
-  }
-
-  #title {
-    font-size: 24px;
-    width: 100%;
-  }
-
-  #welkom {
-    font-size: 14px;
-    margin-top: 16px;
-    padding: 0 12px;
-  }
-
-  #card {
-    margin: 12px;
-  }
-
+@media (max-width: 768px) {
+  #card,
   #card-offerte {
-    margin: 12px;
+    margin: 24px 20px;
   }
 
-  #card-title {
-    padding: 12px;
+  .tab,
+  .tabcontent {
+    padding-left: 20px;
+    padding-right: 20px;
+    flex-direction: column;
   }
 
-  #card-title h1 {
-    font-size: 18px;
+  .tablinks,
+  .packages-subtablinks {
+    font-size: 12px;
+    padding: 6px 10px;
   }
 
-  #card-content {
-    padding: 12px;
+  .packages-row {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 4px;
+    padding: 6px 8px;
   }
 
   #card-content > div {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
+    gap: 6px;
   }
 
   #card-content > div h3 {
-    width: 100%;
-    min-width: unset;
-    margin-bottom: 4px;
-  }
-
-  #card-content > div input[type="number"] {
-    width: 100%;
-    max-width: unset;
-  }
-
-  select {
-    width: 100%;
-    max-width: unset;
-    margin-right: 0;
-    margin-bottom: 8px;
-  }
-
-  #button-standard {
-    width: 100%;
-    height: auto;
-    padding: 12px 16px;
-    line-height: normal;
-  }
-
-  .orders-table {
-    font-size: 12px;
+    min-width: auto;
   }
 
   .orders-table th,
   .orders-table td {
-    padding: 6px 4px;
+    font-size: 12px;
+    padding: 4px 6px;
   }
-}
 
-@media (min-width: 481px) and (max-width: 768px) {
-  #header {
-    padding: 20px 16px;
+  select,
+  input,
+  .packages-input {
+    width: 100%;
+  }
+
+  #header,
+  #header2 {
+    flex-direction: column;
+    gap: 12px;
+    padding: 24px 16px;
   }
 
   #title {
     font-size: 28px;
   }
 
+  #title2 {
+    font-size: 28px;
+  }
+
   #welkom {
-    font-size: 15px;
-    margin-top: 32px;
+    font-size: 16px;
   }
+}
 
-  #card {
-    margin: 20px;
-  }
-
+@media (max-width: 480px) {
+  #card,
   #card-offerte {
-    margin: 20px;
+    margin: 16px 12px;
+  }
+
+  .tab,
+  .tabcontent {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .tablinks,
+  .packages-subtablinks {
+    font-size: 11px;
+    padding: 4px 6px;
+  }
+
+  .packages-row {
+    grid-template-columns: 1fr;
+    padding: 4px 6px;
   }
 
   #card-content > div {
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 4px;
   }
 
-  select {
+  #card-content > div h3 {
+    font-size: 14px;
+  }
+
+  .orders-table th,
+  .orders-table td {
+    font-size: 11px;
+    padding: 3px 4px;
+  }
+
+  #header,
+  #header2 {
+    padding: 16px 12px;
+  }
+
+  #title,
+  #title2 {
+    font-size: 22px;
+  }
+
+  #welkom {
+    font-size: 14px;
+  }
+
+  #button-standard,
+  #button-offerte {
     width: 100%;
-    max-width: unset;
-    margin-right: 0;
+    font-size: 14px;
+    height: 40px;
+    line-height: 40px;
   }
 
-  #button {
-    margin-top: 12px;
+  .calendar {
+    max-width: 100%;
+  }
+
+  .calendar-grid button {
+    height: 28px;
+    font-size: 11px;
+  }
+
+  .packages-input {
     width: 100%;
   }
+}
 
-  .orders-table {
+@media (max-width: 360px) {
+  #card,
+  #card-offerte {
+    margin: 8px 8px;
+  }
+
+  #title,
+  #title2 {
+    font-size: 20px;
+  }
+
+  #welkom {
+    font-size: 12px;
+  }
+
+  .tablinks,
+  .packages-subtablinks {
+    font-size: 10px;
+    padding: 3px 5px;
+  }
+
+  #button-standard,
+  #button-offerte {
     font-size: 13px;
+    height: 36px;
+    line-height: 36px;
+  }
+
+  .calendar-grid button {
+    height: 26px;
+    font-size: 10px;
   }
 }

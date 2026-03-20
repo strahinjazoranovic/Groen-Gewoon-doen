@@ -11,7 +11,7 @@
   </head>
   <body>
     <div id="header2">
-      <img src="assets/logo.png" alt="logo" style="width: 80px" />
+      <img src="assets/logo.png" alt="logo" id="logo" />
       <h2 id="title">Admin — Groen & Gewoon doen</h2>
       <button class="btn btn-green" type="button">Logout</button>
     </div>
@@ -52,9 +52,25 @@
     <div id="pakketten" class="tabcontent">
       <h3>Pakketten</h3>
       <div class="packages-panel">
-        <div class="packages-header">Pakketten Beheren</div>
+        <div class="packages-header">Pakketten beheren</div>
 
         <div class="packages-table"></div>
+
+        <div class="packages-form2" style="margin-top: 16px">
+          <div class="packages-form-title">Pakket toevoegen</div>
+
+          <input type="hidden" id="package-id" />
+
+          <label for="package-name">Naam</label>
+          <input id="package-name" class="packages-input" type="text" />
+
+          <label for="package-price">Prijs</label>
+          <input id="package-price" class="packages-input" type="text" />
+
+          <button class="btn btn-green" id="createPackageBtn" type="button">
+            Toevoegen
+          </button>
+        </div>
 
         <div
           id="editPackageContainer"
@@ -68,10 +84,10 @@
           <label for="edit-package-price">Prijs</label>
           <input id="edit-package-price" class="packages-input" type="text" />
           <div class="packages-form-title2">
-            <button id="savePackageBtn" class="btn btn-dark" type="button">
+            <button id="savePackageBtn" class="btn btn-green" type="button">
               Opslaan
             </button>
-            <button id="cancelEditBtn" class="btn btn-muted" type="button">
+            <button id="cancelEditBtn" class="btn btn-danger" type="button">
               Annuleren
             </button>
           </div>
@@ -82,7 +98,7 @@
     <div id="tarieven" class="tabcontent">
       <h3>Tarieven</h3>
       <div class="packages-panel">
-        <div class="packages-header">Tarieven Beheren</div>
+        <div class="packages-header">Tarieven beheren</div>
         <div class="packages-form">
           <label for="rate-grass">Prijs per m² gras</label>
           <input id="rate-grass" class="packages-input" type="text" />
@@ -109,16 +125,54 @@
     <div id="orderModal" class="modal">
       <div class="modal-content">
         <div class="modal-header">
-          <h2>Vul uw gegevens in</h2>
+          <h2>Pas de bestelling aan</h2>
           <span class="close-button">&times;</span>
         </div>
         <form id="orderForm">
           <label for="customerName">Naam:</label>
           <input type="text" id="customerName" required />
-          <label for="address">Adres (Straat, Postcode, Stad):</label>
-          <input type="text" id="address" required />
+          <label for="orderStatus">Status:</label>
+          <select id="orderStatus">
+            <option value="In behandeling">In behandeling</option>
+            <option value="Verzonden">Verzonden</option>
+            <option value="Voltooid">Voltooid</option>
+            <option value="Geannuleerd">Geannuleerd</option>
+          </select>
           <label for="deliveryDateTime">Leverdatum:</label>
-          <input type="date" id="deliveryDateTime" required />
+          <div class="calendar" aria-label="Kalender">
+            <div class="calendar-header">
+              <button
+                type="button"
+                class="calendar-nav"
+                data-dir="-1"
+                aria-label="Vorige maand"
+              ></button>
+              <div class="calendar-title" id="calendarTitle"></div>
+              <button
+                type="button"
+                class="calendar-nav"
+                data-dir="1"
+                aria-label="Volgende maand"
+              ></button>
+            </div>
+            <div class="calendar-weekdays" aria-hidden="true">
+              <div>Ma</div>
+              <div>Di</div>
+              <div>Wo</div>
+              <div>Do</div>
+              <div>Vr</div>
+              <div>Za</div>
+              <div>Zo</div>
+            </div>
+            <div class="calendar-grid" id="calendarGrid"></div>
+            <div class="calendar-footer">
+              <div id="calendarSelected">Geen datum geselecteerd</div>
+              <button type="button" class="calendar-clear" id="calendarClear">
+                Wissen
+              </button>
+            </div>
+          </div>
+          <input type="hidden" id="deliveryDateTime" name="deliveryDateTime" />
           <button type="submit" class="btn btn-green2">Update order</button>
         </form>
       </div>

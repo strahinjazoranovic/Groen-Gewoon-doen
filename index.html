@@ -11,7 +11,7 @@
   </head>
   <body>
     <div id="header">
-      <img src="assets/logo.png" alt="logo" style="width: 80px" />
+      <img src="assets/logo.png" alt="logo" id="logo" />
       <h1 id="title">Groen & Gewoon doen</h1>
     </div>
     <div id="welkom">
@@ -130,9 +130,7 @@
                 class="calendar-nav"
                 data-dir="-1"
                 aria-label="Vorige maand"
-              >
-                <
-              </button>
+              ></button>
               <div class="calendar-title" id="calendarTitle"></div>
               <button
                 type="button"
@@ -160,7 +158,7 @@
               </button>
             </div>
           </div>
-          <input type="hidden" id="deliveryDateTime" name="deliveryDateTime" />
+          <input type="hidden" id="deliveryDateTime" name="deliveryDateTime" required />
 
           <button type="submit" id="submitOrder" class="btn btn-green2">
             Plaats Order

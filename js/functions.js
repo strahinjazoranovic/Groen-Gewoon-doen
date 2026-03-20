@@ -1,6 +1,7 @@
 // This is the functions.js file, which holds all the functions for the node server like fetching or creating orders
 
-const API_BASE = "http://localhost:3000/data";
+// API_BASE which looks at the window.location name
+const API_BASE = `${window.location.origin}/data`;
 
 // Packages
 let orderToDelete = null;
@@ -78,6 +79,7 @@ async function displayOrdersAdmin(tableSelector) {
 
   tbody.innerHTML = "";
 
+  // For every order that exists show these HTML elements
   orders.forEach((order) => {
     const row = document.createElement("tr");
     row.innerHTML = `
@@ -140,7 +142,6 @@ async function createOrder(orderData) {
   } catch (error) {
     console.error("Error creating order:", error);
     showNotification("Failed creating order");
-    return null;
   }
 }
 
@@ -177,7 +178,6 @@ async function deleteOrder(orderId) {
     return data.orders ?? [];
   } catch (error) {
     console.error("Error deleting order:", error);
-    showNotification("Failed deleting order");
   }
 }
 
@@ -209,22 +209,22 @@ document.getElementById("deleteModalClose").addEventListener("click", () => {
   document.getElementById("deleteModal").style.display = "none";
 });
 
-// UPDATE package
-async function updatePackage(packageId, packageData) {
+// Create package function that gets used in admin.js for creating packages
+async function createPackage(packageId, packageData) {
   try {
     const response = await fetch(`${API_BASE}/packages/${packageId}`, {
-      method: "PUT",
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(packageData),
     });
 
-    if (!response.ok) throw new Error("Failed to update package");
+    if (!response.ok) throw new Error("Failed to create package");
 
     const data = await response.json();
     return data.packages ?? [];
   } catch (error) {
-    console.error("Error updating package:", error);
-    showNotification("Failed updating order");
+    console.error("Error creating package:", error);
+    showNotification("Failed creating package");
   }
 }
 
@@ -253,6 +253,7 @@ function deletePackageModal(packageId) {
   document.getElementById("deleteModal2").style.display = "block";
 }
 
+// Confirm button for deleting an package in the package modal
 const confirmBtn = document.getElementById("confirmDelete2");
 if (confirmBtn) {
   confirmBtn.addEventListener("click", async () => {
@@ -265,6 +266,7 @@ if (confirmBtn) {
   });
 }
 
+// Cancel button for deleting an package in the package modal
 const cancelBtn = document.getElementById("cancelDelete2");
 if (cancelBtn) {
   cancelBtn.addEventListener("click", () => {
@@ -273,6 +275,7 @@ if (cancelBtn) {
   });
 }
 
+// Close button for the package modal
 const closeBtn = document.getElementById("deleteModalClose2");
 if (closeBtn) {
   closeBtn.addEventListener("click", () => {
